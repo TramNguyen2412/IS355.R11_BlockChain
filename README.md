@@ -1,1 +1,54 @@
-# IS355.R11_BlockChain
+# MediChain - Hệ thống quản lý bảo hiểm y tế phi tập trung
+
+**MediChain** là Ứng dụng phi tập trung (DApp) quản lý bảo hiểm y tế tham số, được phát triển nhằm tự động hóa quy trình bồi thường, tăng cường tính minh bạch và bảo vệ quyền riêng tư của bệnh nhân thông qua công nghệ Blockchain và mã hóa[cite: 9]. Dự án thuộc **Bài tập 04 - Đồ án môn học IS355**.
+
+##  Thành viên nhóm
+
+| Họ và tên | MSSV | Vai trò chính |
+| :--- | :---: | :--- |
+| **Trâm** | *(Điền MSSV)* | Phát triển Smart Contract, Màn hình Bệnh viện |
+| **Phương Anh** | 22520070 | Tích hợp IPFS, Mã hóa (AES/RSA), Màn hình Công ty Bảo hiểm |
+| **Lan Anh** | 23520052 | Khung ứng dụng React, Kết nối ví Web3, Màn hình Bệnh nhân |
+
+##  Công nghệ sử dụng
+
+- **Smart Contract:** Solidity (^0.8.20), OpenZeppelin v5 (ERC-721, AccessControl, ReentrancyGuard)[cite: 9].
+- **Môi trường & Triển khai:** Hardhat, Ethereum Sepolia Testnet[cite: 9].
+- **Frontend (Web3):** ReactJS, Vite, Ethers.js v6, MetaMask[cite: 9].
+- **Lưu trữ phi tập trung:** IPFS (Pinata)[cite: 9].
+- **Bảo mật & Mã hóa:** WebCrypto API (AES-256-GCM, RSA-OAEP 2048) áp dụng mô hình mã hóa phong bì (Envelope Encryption)[cite: 9].
+
+##  Các tính năng chi tiết theo vai trò
+
+### 1. Bệnh nhân (Patient)
+- **Khám phá & Mua bảo hiểm:** Xem danh sách các gói bảo hiểm (hạn mức, thời hạn, điều khoản PDF) và thanh toán phí bằng ETH[cite: 9, 13].
+- **Ví NFT Thẻ bảo hiểm:** Quản lý thẻ bảo hiểm dưới dạng NFT Soulbound (không thể chuyển nhượng), theo dõi số dư hạn mức bồi thường còn lại theo thời gian thực[cite: 9, 13].
+- **Quản lý Khóa bảo mật:** Khởi tạo và lưu trữ cặp khóa RSA-OAEP để mã hóa dữ liệu cá nhân (Mã số bảo hiểm) ngay trên trình duyệt[cite: 9, 13].
+- **Yêu cầu bồi thường (Claim):** Tự gửi yêu cầu bồi thường, tải hóa đơn và bệnh án lên IPFS[cite: 9, 13].
+- **Theo dõi hồ sơ:** Xem tiến độ xử lý (Chờ xử lý / Đã duyệt / Từ chối), tự giải mã hồ sơ bệnh án cá nhân, và nhận tiền bồi thường trực tiếp về ví[cite: 9, 13].
+
+### 2. Bệnh viện (Hospital)
+- **Xác thực quyền hạn (RBAC):** Truy cập hệ thống thông qua danh sách ủy quyền (HOSPITAL_ROLE) được cấp bởi Công ty bảo hiểm[cite: 9, 13].
+- **Kiểm tra thẻ bảo hiểm (Verification):** Quét ví bệnh nhân để xác minh thẻ NFT còn hiệu lực và trích xuất thông tin hạn mức chi trả tối đa[cite: 9, 13].
+- **Bảo mật dữ liệu Y tế (Envelope Encryption):** Nhập chi phí điều trị, mã hóa bệnh án nhạy cảm bằng AES-256-GCM. Sau đó, bọc khóa AES bằng RSA cho 3 đối tượng (Bệnh nhân, Bệnh viện, Công ty bảo hiểm) trước khi đẩy lên IPFS nhằm bảo vệ quyền riêng tư tuyệt đối[cite: 9, 13].
+- **Xác nhận chi phí (Confirm Claim):** Đóng vai trò Oracle xác nhận số tiền điều trị thực tế làm cơ sở minh bạch để hệ thống tiến hành chi trả[cite: 9, 13].
+
+### 3. Công ty bảo hiểm (Insurer / Admin)
+- **Quản trị Gói bảo hiểm:** Tạo mới gói bảo hiểm, thiết lập giá phí, thời hạn, hạn mức chi trả và tải file PDF điều khoản hợp đồng lên mạng lưới IPFS[cite: 9, 13].
+- **Quản lý Quỹ bồi thường:** Nạp tiền vào quỹ chung (Pool) để Smart Contract tự động trích xuất và xử lý chi trả[cite: 9, 13].
+- **Thẩm định hồ sơ (Retrieve & Decrypt):** Lấy mã CID từ Blockchain, tải hồ sơ gốc từ IPFS và giải mã bằng khóa riêng RSA để xem xét bằng chứng y tế[cite: 9, 13].
+- **Duyệt bồi thường tự động (Parametric Insurance):** Kích hoạt hệ thống duyệt bồi thường. Smart Contract sẽ tự động đối chiếu các ràng buộc (thẻ còn hạn, số tiền không vượt quá hạn mức, đã được bệnh viện xác nhận, quỹ đủ tiền). Nếu hợp lệ, ETH sẽ được chuyển thẳng cho bệnh nhân mà không cần thao tác chuyển khoản thủ công[cite: 9, 13].
+- **Bảng điều khiển Giám sát (Dashboard):** Quản lý toàn bộ sự kiện On-chain, thống kê tổng doanh thu phí, tổng chi phí bồi thường và giám sát số dư quỹ[cite: 9, 13].
+
+##  Hướng dẫn cài đặt và chạy dự án
+
+### Yêu cầu hệ thống
+- Node.js (phiên bản LTS >= 18)
+- Tiện ích mở rộng ví MetaMask trên trình duyệt
+- Mạng: Sepolia Testnet (cần có sẵn Sepolia ETH để giao dịch)[cite: 13]
+
+### Các bước cài đặt
+1. **Clone repository về máy:**
+   ```bash
+   git clone [https://github.com/TramNguyen2412/IS355.R11_BlockChain.git](https://github.com/TramNguyen2412/IS355.R11_BlockChain.git) MediChain
+   cd MediChain
