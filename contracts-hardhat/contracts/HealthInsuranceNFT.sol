@@ -118,36 +118,131 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NGHIEP VU 2: MUA BAO HIEM + MINT NFT =====================
-    // TODO A05
 
-    function purchasePolicy(uint256 planId, string calldata encryptedHealthId) external payable returns (uint256 tokenId) {
-        revert("TODO");
+    /// Benh nhan mua goi, tra dung gia, nhan the NFT (soulbound)
+    function purchasePolicy(uint256 planId, string calldata encryptedHealthId)
+        external
+        payable
+        nonReentrant
+        returns (uint256 tokenId)
+    {
+        require(planId != 0 && planId <= totalPlans, "Goi bao hiem khong ton tai");
+        Plan storage plan = plans[planId];
+        require(plan.active, "Goi bao hiem khong hoat dong");
+        require(msg.value == plan.price, "Sai so tien thanh toan");
+
+        uint256 current = activePolicyOf[msg.sender];
+        if (current != 0) {
+            require(block.timestamp > policies[current].expiryDate, "Da co goi bao hiem con han");
+        }
+
+        totalPolicies++;
+        tokenId = totalPolicies;
+        uint256 expiry = block.timestamp + plan.durationDays * 1 days;
+        policies[tokenId] = Policy(
+            tokenId, planId, msg.sender, encryptedHealthId,
+            plan.coverageLimit, 0, block.timestamp, expiry, plan.policyDocCID
+        );
+        activePolicyOf[msg.sender] = tokenId;
+
+        emit PolicyPurchased(tokenId, msg.sender, planId, expiry);
+        _safeMint(msg.sender, tokenId);
     }
 
-    function verifyInsurance(address patient) external view returns (bool isValid, uint256 tokenId, uint256 remainingLimit, uint256 expiryDate) {
-        return (false, 0, 0, 0);
+    /// Kiem tra the (Verification). Khong bao gio revert.
+    function verifyInsurance(address patient)
+        external
+        view
+        returns (bool isValid, uint256 tokenId, uint256 remainingLimit, uint256 expiryDate)
+    {
+        uint256 id = activePolicyOf[patient];
+        if (id == 0) {
+            return (false, 0, 0, 0);
+        }
+        Policy storage p = policies[id];
+        return (block.timestamp <= p.expiryDate, id, p.coverageLimit - p.usedAmount, p.expiryDate);
     }
 
     // ===================== NGHIEP VU 3: YEU CAU BOI THUONG =====================
-    // TODO A06
 
-    function submitClaim(uint256 tokenId, uint256 amount, string calldata billCID, string calldata recordCID) external returns (uint256 claimId) {
-        revert("TODO");
+    /// Benh nhan (chu NFT) hoac benh vien gui yeu cau boi thuong
+    function submitClaim(uint256 tokenId, uint256 amount, string calldata billCID, string calldata recordCID)
+        external
+        returns (uint256 claimId)
+    {
+        bool byHospital = hasRole(HOSPITAL_ROLE, msg.sender);
+        require(byHospital || _ownerOf(tokenId) == msg.sender, "Khong phai chu the hoac benh vien");
+        require(amount > 0, "So tien khong hop le");
+
+        Policy storage p = policies[tokenId];
+        require(block.timestamp <= p.expiryDate, "Bao hiem da het han");
+        require(amount <= p.coverageLimit - p.usedAmount, "Vuot qua han muc bao hiem");
+
+        totalClaims++;
+        claimId = totalClaims;
+        Claim storage c = claims[claimId];
+        c.claimId = claimId;
+        c.tokenId = tokenId;
+        c.patient = p.holder;
+        c.amount = amount;
+        c.billCID = billCID;
+        c.recordCID = recordCID;
+        c.status = ClaimStatus.PENDING;
+        c.createdAt = block.timestamp;
+        if (byHospital) {
+            c.hospital = msg.sender;
+            c.hospitalConfirmed = true;
+            c.confirmedAmount = amount;
+        }
+        claimIdsOf[p.holder].push(claimId);
+        emit ClaimSubmitted(claimId, tokenId, p.holder, msg.sender, amount);
     }
 
-    function confirmClaim(uint256 claimId, uint256 confirmedAmount) external {
-        revert("TODO");
+    /// RANG BUOC 1: chi vi co HOSPITAL_ROLE moi xac nhan duoc chi phi
+    function confirmClaim(uint256 claimId, uint256 confirmedAmount) external onlyRole(HOSPITAL_ROLE) {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        require(confirmedAmount > 0, "So tien khong hop le");
+        require(confirmedAmount <= c.amount, "So tien xac nhan vuot so tien yeu cau");
+        c.hospital = msg.sender;
+        c.hospitalConfirmed = true;
+        c.confirmedAmount = confirmedAmount;
+        emit ClaimConfirmed(claimId, msg.sender, confirmedAmount);
     }
 
     // ===================== NGHIEP VU 4: DUYET VA CHI TRA TU DONG =====================
-    // TODO A07
 
-    function approveClaim(uint256 claimId) external {
-        revert("TODO");
+    /// RANG BUOC 2: tu kiem tra han muc, han dung, quy; Checks -> Effects -> Interactions
+    function approveClaim(uint256 claimId) external nonReentrant {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        require(c.hospitalConfirmed, "Benh vien chua xac nhan");
+
+        uint256 amt = c.confirmedAmount;
+        Policy storage p = policies[c.tokenId];
+        require(block.timestamp <= p.expiryDate, "Bao hiem da het han");
+        require(p.usedAmount + amt <= p.coverageLimit, "Vuot qua han muc bao hiem");
+        require(address(this).balance >= amt, "Quy bao hiem khong du");
+
+        c.status = ClaimStatus.APPROVED;
+        c.resolvedAt = block.timestamp;
+        p.usedAmount += amt;
+
+        (bool ok, ) = payable(c.patient).call{value: amt}("");
+        require(ok, "Chuyen tien that bai");
+        emit ClaimApproved(claimId, c.patient, amt);
     }
 
-    function rejectClaim(uint256 claimId, string calldata reason) external {
-        revert("TODO");
+    /// Admin tu choi claim
+    function rejectClaim(uint256 claimId, string calldata reason) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        c.status = ClaimStatus.REJECTED;
+        c.resolvedAt = block.timestamp;
+        emit ClaimRejected(claimId, reason);
     }
 
     // ===================== HAM DOC =====================
@@ -178,7 +273,19 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NFT SOULBOUND =====================
-    // TODO A05: them tokenURI va _update (soulbound) o chang A05
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        _requireOwned(tokenId);
+        return string.concat("ipfs://", policies[tokenId].policyDocCID);
+    }
+
+    function _update(address to, uint256 tokenId, address auth) internal override returns (address) {
+        address from = _ownerOf(tokenId);
+        if (from != address(0) && to != address(0)) {
+            revert("Soulbound: khong the chuyen nhuong");
+        }
+        return super._update(to, tokenId, auth);
+    }
 
     function supportsInterface(bytes4 interfaceId) public view override(ERC721, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
