@@ -68,30 +68,53 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     mapping(address => string) public encryptionKeyOf;
 
     constructor() ERC721("Health Insurance Card", "HIC") {
-        // TODO A04: cap DEFAULT_ADMIN_ROLE cho deployer
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     // ===================== NGHIEP VU 1: THIET LAP HE THONG =====================
-    // TODO A04: than ham se duoc viet o chang A04
 
-    function createPlan(string calldata name, uint256 price, uint256 coverageLimit, uint256 durationDays, string calldata policyDocCID) external returns (uint256 planId) {
-        revert("TODO");
+    /// Admin tao goi bao hiem moi
+    function createPlan(
+        string calldata name,
+        uint256 price,
+        uint256 coverageLimit,
+        uint256 durationDays,
+        string calldata policyDocCID
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 planId) {
+        require(price > 0 && coverageLimit > 0 && durationDays > 0, "So tien khong hop le");
+        totalPlans++;
+        planId = totalPlans;
+        plans[planId] = Plan(planId, name, price, coverageLimit, durationDays, policyDocCID, true);
+        emit PlanCreated(planId, name, price, coverageLimit, durationDays, policyDocCID);
     }
 
-    function setPlanActive(uint256 planId, bool active) external {
-        revert("TODO");
+    /// Admin bat/tat goi
+    function setPlanActive(uint256 planId, bool active) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(planId != 0 && planId <= totalPlans, "Goi bao hiem khong ton tai");
+        plans[planId].active = active;
+        emit PlanStatusChanged(planId, active);
     }
 
-    function authorizeHospital(address hospital, bool status) external {
-        revert("TODO");
+    /// Admin cap hoac thu hoi quyen benh vien
+    function authorizeHospital(address hospital, bool status) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (status) {
+            _grantRole(HOSPITAL_ROLE, hospital);
+        } else {
+            _revokeRole(HOSPITAL_ROLE, hospital);
+        }
+        emit HospitalAuthorized(hospital, status);
     }
 
+    /// Nap quy boi thuong
     function fundPool() external payable {
-        revert("TODO");
+        require(msg.value > 0, "So tien khong hop le");
+        emit PoolFunded(msg.sender, msg.value);
     }
 
+    /// Dang ky khoa cong khai RSA (PEM)
     function registerEncryptionKey(string calldata rsaPublicKeyPem) external {
-        revert("TODO");
+        encryptionKeyOf[msg.sender] = rsaPublicKeyPem;
+        emit EncryptionKeyRegistered(msg.sender);
     }
 
     // ===================== NGHIEP VU 2: MUA BAO HIEM + MINT NFT =====================
@@ -128,10 +151,13 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== HAM DOC =====================
-    // TODO A04: tra gia tri mac dinh, se viet that o chang A04
 
     function getPlans() external view returns (Plan[] memory) {
-        return new Plan[](0);
+        Plan[] memory list = new Plan[](totalPlans);
+        for (uint256 i = 1; i <= totalPlans; i++) {
+            list[i - 1] = plans[i];
+        }
+        return list;
     }
 
     function getPolicy(uint256 tokenId) external view returns (Policy memory) {
@@ -139,6 +165,7 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     function getClaim(uint256 claimId) external view returns (Claim memory) {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
         return claims[claimId];
     }
 
