@@ -6,30 +6,29 @@ Cập nhật lần cuối: 24/10/2026
 - [x] A01 — Khởi tạo Hardhat v2, OpenZeppelin v5, biên dịch thành công evm cancun. Báo cáo: docs/plan/A/reports/REPORT_A01.md
 - [x] A02 — Viết bản khung Smart Contract HealthInsuranceNFT.sol (10 event, 17 hàm, struct, khớp dấu vân tay d453413b0dc38f64). Báo cáo: docs/plan/A/reports/REPORT_A02.md
 - [x] A03 — Script xuất ABI và deploy (exportAbi.js, deploy.js, sinh abi.json và address.json, mốc H2). Báo cáo: docs/plan/A/reports/REPORT_A03.md
+- [x] A04 — Nghiệp vụ 1: Thiết lập hệ thống (createPlan, setPlanActive, authorizeHospital, fundPool, registerEncryptionKey + 9 test passing). Báo cáo: docs/plan/A/reports/REPORT_A04.md
 
 ## Bước tiếp theo
-- Chặng A04: Nghiệp vụ 1: Thiết lập hệ thống (`docs/plan/A/A04_nghiep_vu1_thiet_lap.md`).
+- Chặng A05: Nghiệp vụ 2: Mua bảo hiểm và phát hành NFT soulbound (`docs/plan/A/A05_nghiep_vu2_mua_bao_hiem_nft.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A03 đã hoàn thành
-- Bước tiếp theo (làm ngay): Chặng A04
+- Task hiện tại: A04 đã hoàn thành
+- Bước tiếp theo (làm ngay): Chặng A05
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `contracts-hardhat/scripts/exportAbi.js` — tạo mới
-- `contracts-hardhat/scripts/deploy.js` — tạo mới
-- `frontend/src/contracts/abi.json` — sinh tự động qua script
-- `frontend/src/contracts/address.json` — sinh tự động qua script
-- `docs/plan/A/reports/REPORT_A03.md` — tạo mới
+- `contracts-hardhat/contracts/HealthInsuranceNFT.sol` — sửa (hoàn thiện nghiệp vụ 1 và hàm đọc)
+- `contracts-hardhat/test/HealthInsuranceNFT.test.js` — tạo mới (9 test case)
+- `docs/plan/A/reports/REPORT_A04.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Mốc H2 sẵn sàng bàn giao cho C (Lan Anh) và B (Phương Anh).
+- Test T08 chuyển sang A05 do cần hàm purchasePolicy; tổng số test hiện tại là 9 (T01–T07, T32 và test phụ registerEncryptionKey), tất cả passing.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- [ ] Gửi cả nhóm (B, C): "H2 xong: contract khung + abi.json + address.json (local), git pull nhé".
+- Không có.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd contracts-hardhat && npx hardhat run scripts/deploy.js --network localhost`  Kết quả: Deploy thành công, ghi abi.json và address.json.
+- Lệnh: `cd contracts-hardhat && npx hardhat test`  Kết quả: 9 passing (734ms).
