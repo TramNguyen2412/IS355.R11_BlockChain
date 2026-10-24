@@ -148,6 +148,66 @@ describe("HealthInsuranceNFT", function () {
     });
   });
 
+  describe("Claim va rang buoc", function () {
+    it("T16 benh vien submitClaim: PENDING, da xac nhan, event", async function () {
+      const { c, hospital, patient } = await loadFixture(boughtFixture);
+      await expect(c.connect(hospital).submitClaim(1, CLAIM1, "mock-cid-bill-01", "mock-cid-record-01"))
+        .to.emit(c, "ClaimSubmitted").withArgs(1, 1, patient.address, hospital.address, CLAIM1);
+      const cl = await c.getClaim(1);
+      expect(cl.status).to.equal(0n);
+      expect(cl.hospitalConfirmed).to.equal(true);
+      expect(cl.hospital).to.equal(hospital.address);
+      expect(cl.confirmedAmount).to.equal(CLAIM1);
+      expect(cl.patient).to.equal(patient.address);
+      expect(cl.resolvedAt).to.equal(0n);
+      expect((await c.getClaimsByPatient(patient.address)).map(Number)).to.deep.equal([1]);
+    });
+    it("T17 benh nhan submitClaim: PENDING, chua xac nhan", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await c.connect(patient).submitClaim(1, CLAIM1, "b", "r");
+      const cl = await c.getClaim(1);
+      expect(cl.status).to.equal(0n);
+      expect(cl.hospitalConfirmed).to.equal(false);
+      expect(cl.hospital).to.equal(ethers.ZeroAddress);
+      expect(cl.confirmedAmount).to.equal(0n);
+    });
+    it("T18 vi la submitClaim bi revert", async function () {
+      const { c, outsider } = await loadFixture(boughtFixture);
+      await expect(c.connect(outsider).submitClaim(1, CLAIM1, "b", "r")).to.be.revertedWith("Khong phai chu the hoac benh vien");
+    });
+    it("T19 submitClaim vuot han muc con lai bi revert", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await expect(c.connect(patient).submitClaim(1, BASIC.limit + 1n, "b", "r")).to.be.revertedWith("Vuot qua han muc bao hiem");
+      await expect(c.connect(patient).submitClaim(1, 0, "b", "r")).to.be.revertedWith("So tien khong hop le");
+    });
+    it("T20 vi la confirmClaim bi revert (RBAC)", async function () {
+      const { c, patient, outsider } = await loadFixture(boughtFixture);
+      await c.connect(patient).submitClaim(1, CLAIM1, "b", "r");
+      await expect(c.connect(outsider).confirmClaim(1, CLAIM1)).to.be.revertedWithCustomError(c, "AccessControlUnauthorizedAccount");
+      await expect(c.connect(patient).confirmClaim(1, CLAIM1)).to.be.revertedWithCustomError(c, "AccessControlUnauthorizedAccount");
+    });
+    it("T21 benh vien confirmClaim hop le", async function () {
+      const { c, hospital, patient } = await loadFixture(boughtFixture);
+      await c.connect(patient).submitClaim(1, CLAIM1, "b", "r");
+      await expect(c.connect(hospital).confirmClaim(1, CLAIM1)).to.emit(c, "ClaimConfirmed").withArgs(1, hospital.address, CLAIM1);
+      const cl = await c.getClaim(1);
+      expect(cl.hospitalConfirmed).to.equal(true);
+      expect(cl.confirmedAmount).to.equal(CLAIM1);
+      expect(cl.hospital).to.equal(hospital.address);
+    });
+    it("T22 confirmedAmount > amount bi revert", async function () {
+      const { c, hospital, patient } = await loadFixture(boughtFixture);
+      await c.connect(patient).submitClaim(1, CLAIM1, "b", "r");
+      await expect(c.connect(hospital).confirmClaim(1, CLAIM1 + 1n)).to.be.revertedWith("So tien xac nhan vuot so tien yeu cau");
+      await expect(c.connect(hospital).confirmClaim(99, 1)).to.be.revertedWith("Khong tim thay yeu cau boi thuong");
+    });
+    it("T23 submitClaim khi het han bi revert", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await time.increase(31 * DAY);
+      await expect(c.connect(patient).submitClaim(1, CLAIM1, "b", "r")).to.be.revertedWith("Bao hiem da het han");
+    });
+  });
+
   describe("Bao mat nang cao", function () {
     it("T32 fundPool cong dung vao poolBalance", async function () {
       const [admin] = await ethers.getSigners();

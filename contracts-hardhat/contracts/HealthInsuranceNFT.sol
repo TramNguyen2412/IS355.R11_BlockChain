@@ -164,14 +164,51 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NGHIEP VU 3: YEU CAU BOI THUONG =====================
-    // TODO A06
 
-    function submitClaim(uint256 tokenId, uint256 amount, string calldata billCID, string calldata recordCID) external returns (uint256 claimId) {
-        revert("TODO");
+    /// Benh nhan (chu NFT) hoac benh vien gui yeu cau boi thuong
+    function submitClaim(uint256 tokenId, uint256 amount, string calldata billCID, string calldata recordCID)
+        external
+        returns (uint256 claimId)
+    {
+        bool byHospital = hasRole(HOSPITAL_ROLE, msg.sender);
+        require(byHospital || _ownerOf(tokenId) == msg.sender, "Khong phai chu the hoac benh vien");
+        require(amount > 0, "So tien khong hop le");
+
+        Policy storage p = policies[tokenId];
+        require(block.timestamp <= p.expiryDate, "Bao hiem da het han");
+        require(amount <= p.coverageLimit - p.usedAmount, "Vuot qua han muc bao hiem");
+
+        totalClaims++;
+        claimId = totalClaims;
+        Claim storage c = claims[claimId];
+        c.claimId = claimId;
+        c.tokenId = tokenId;
+        c.patient = p.holder;
+        c.amount = amount;
+        c.billCID = billCID;
+        c.recordCID = recordCID;
+        c.status = ClaimStatus.PENDING;
+        c.createdAt = block.timestamp;
+        if (byHospital) {
+            c.hospital = msg.sender;
+            c.hospitalConfirmed = true;
+            c.confirmedAmount = amount;
+        }
+        claimIdsOf[p.holder].push(claimId);
+        emit ClaimSubmitted(claimId, tokenId, p.holder, msg.sender, amount);
     }
 
-    function confirmClaim(uint256 claimId, uint256 confirmedAmount) external {
-        revert("TODO");
+    /// RANG BUOC 1: chi vi co HOSPITAL_ROLE moi xac nhan duoc chi phi
+    function confirmClaim(uint256 claimId, uint256 confirmedAmount) external onlyRole(HOSPITAL_ROLE) {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        require(confirmedAmount > 0, "So tien khong hop le");
+        require(confirmedAmount <= c.amount, "So tien xac nhan vuot so tien yeu cau");
+        c.hospital = msg.sender;
+        c.hospitalConfirmed = true;
+        c.confirmedAmount = confirmedAmount;
+        emit ClaimConfirmed(claimId, msg.sender, confirmedAmount);
     }
 
     // ===================== NGHIEP VU 4: DUYET VA CHI TRA TU DONG =====================

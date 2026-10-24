@@ -8,22 +8,23 @@ Cập nhật lần cuối: 24/10/2026
 - [x] A03 — Script xuất ABI và deploy (exportAbi.js, deploy.js, sinh abi.json và address.json, mốc H2). Báo cáo: docs/plan/A/reports/REPORT_A03.md
 - [x] A04 — Nghiệp vụ 1: Thiết lập hệ thống (createPlan, setPlanActive, authorizeHospital, fundPool, registerEncryptionKey + 9 test passing). Báo cáo: docs/plan/A/reports/REPORT_A04.md
 - [x] A05 — Nghiệp vụ 2: Mua bảo hiểm, thẻ NFT, xác minh thẻ (purchasePolicy, verifyInsurance, tokenURI, soulbound + 18 test passing). Báo cáo: docs/plan/A/reports/REPORT_A05.md
+- [x] A06 — Nghiệp vụ 3: Yêu cầu bồi thường (submitClaim, confirmClaim RBAC HOSPITAL_ROLE + 26 test passing). Báo cáo: docs/plan/A/reports/REPORT_A06.md
 
 ## Bước tiếp theo
-- Chặng A06: Nghiệp vụ 3: Yêu cầu bồi thường (`docs/plan/A/A06_nghiep_vu3_claim.md`).
+- Chặng A07: Nghiệp vụ 4: Duyệt và chi trả tự động (`docs/plan/A/A07_nghiep_vu4_duyet_chi_tra.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A05 đã hoàn thành
-- Bước tiếp theo (làm ngay): Chặng A06
+- Task hiện tại: A06 đã hoàn thành
+- Bước tiếp theo (làm ngay): Chặng A07
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `contracts-hardhat/contracts/HealthInsuranceNFT.sol` — sửa (hoàn thiện nghiệp vụ 2, soulbound, verifyInsurance)
-- `contracts-hardhat/test/HealthInsuranceNFT.test.js` — sửa (18 test case)
-- `docs/plan/A/reports/REPORT_A05.md` — tạo mới
+- `contracts-hardhat/contracts/HealthInsuranceNFT.sol` — sửa (hoàn thiện nghiệp vụ 3 submitClaim, confirmClaim)
+- `contracts-hardhat/test/HealthInsuranceNFT.test.js` — sửa (26 test case)
+- `docs/plan/A/reports/REPORT_A06.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Thẻ NFT bảo hiểm là Soulbound (chặn transferFrom / safeTransferFrom qua _update); mỗi ví chỉ có tối đa 1 thẻ còn hạn; hết hạn được mua gói mới.
+- Ràng buộc logic số 1: chỉ bệnh viện được cấp HOSPITAL_ROLE mới xác nhận được chi phí điều trị; bệnh viện submitClaim tự động xác nhận ngay.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
@@ -32,4 +33,4 @@ Cập nhật lần cuối: 24/10/2026
 - Không có.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd contracts-hardhat && npx hardhat test`  Kết quả: 18 passing (818ms).
+- Lệnh: `cd contracts-hardhat && npx hardhat test`  Kết quả: 26 passing (1s).
