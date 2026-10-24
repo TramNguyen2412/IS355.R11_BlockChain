@@ -118,14 +118,49 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NGHIEP VU 2: MUA BAO HIEM + MINT NFT =====================
-    // TODO A05
 
-    function purchasePolicy(uint256 planId, string calldata encryptedHealthId) external payable returns (uint256 tokenId) {
-        revert("TODO");
+    /// Benh nhan mua goi, tra dung gia, nhan the NFT (soulbound)
+    function purchasePolicy(uint256 planId, string calldata encryptedHealthId)
+        external
+        payable
+        nonReentrant
+        returns (uint256 tokenId)
+    {
+        require(planId != 0 && planId <= totalPlans, "Goi bao hiem khong ton tai");
+        Plan storage plan = plans[planId];
+        require(plan.active, "Goi bao hiem khong hoat dong");
+        require(msg.value == plan.price, "Sai so tien thanh toan");
+
+        uint256 current = activePolicyOf[msg.sender];
+        if (current != 0) {
+            require(block.timestamp > policies[current].expiryDate, "Da co goi bao hiem con han");
+        }
+
+        totalPolicies++;
+        tokenId = totalPolicies;
+        uint256 expiry = block.timestamp + plan.durationDays * 1 days;
+        policies[tokenId] = Policy(
+            tokenId, planId, msg.sender, encryptedHealthId,
+            plan.coverageLimit, 0, block.timestamp, expiry, plan.policyDocCID
+        );
+        activePolicyOf[msg.sender] = tokenId;
+
+        emit PolicyPurchased(tokenId, msg.sender, planId, expiry);
+        _safeMint(msg.sender, tokenId);
     }
 
-    function verifyInsurance(address patient) external view returns (bool isValid, uint256 tokenId, uint256 remainingLimit, uint256 expiryDate) {
-        return (false, 0, 0, 0);
+    /// Kiem tra the (Verification). Khong bao gio revert.
+    function verifyInsurance(address patient)
+        external
+        view
+        returns (bool isValid, uint256 tokenId, uint256 remainingLimit, uint256 expiryDate)
+    {
+        uint256 id = activePolicyOf[patient];
+        if (id == 0) {
+            return (false, 0, 0, 0);
+        }
+        Policy storage p = policies[id];
+        return (block.timestamp <= p.expiryDate, id, p.coverageLimit - p.usedAmount, p.expiryDate);
     }
 
     // ===================== NGHIEP VU 3: YEU CAU BOI THUONG =====================
@@ -178,7 +213,19 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NFT SOULBOUND =====================
-    // TODO A05: them tokenURI va _update (soulbound) o chang A05
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        _requireOwned(tokenId);
+        return string.concat("ipfs://", policies[tokenId].policyDocCID);
+    }
+
+    function _update(address to, uint256 tokenId, address auth) internal override returns (address) {
+        address from = _ownerOf(tokenId);
+        if (from != address(0) && to != address(0)) {
+            revert("Soulbound: khong the chuyen nhuong");
+        }
+        return super._update(to, tokenId, auth);
+    }
 
     function supportsInterface(bytes4 interfaceId) public view override(ERC721, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);

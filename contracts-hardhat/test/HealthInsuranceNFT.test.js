@@ -79,6 +79,73 @@ describe("HealthInsuranceNFT", function () {
       await expect(c.createPlan("x", 0, 1, 1, "cid")).to.be.revertedWith("So tien khong hop le");
       await expect(c.createPlan("x", 1, 0, 1, "cid")).to.be.revertedWith("So tien khong hop le");
     });
+    it("T08 tat goi roi mua bi revert", async function () {
+      const { c, patient } = await loadFixture(deployFixture);
+      await expect(c.setPlanActive(1, false)).to.emit(c, "PlanStatusChanged").withArgs(1, false);
+      await expect(c.connect(patient).purchasePolicy(1, "id", { value: BASIC.price })).to.be.revertedWith("Goi bao hiem khong hoat dong");
+    });
+  });
+
+  describe("Mua bao hiem va NFT", function () {
+    it("T09 mua dung gia: mint NFT, Policy dung, event", async function () {
+      const { c, patient } = await loadFixture(deployFixture);
+      const tx = await c.connect(patient).purchasePolicy(1, "enc-health-id", { value: BASIC.price });
+      const now = BigInt(await time.latest());
+      await expect(tx).to.emit(c, "PolicyPurchased").withArgs(1, patient.address, 1, now + 30n * 86400n);
+      expect(await c.ownerOf(1)).to.equal(patient.address);
+      const p = await c.getPolicy(1);
+      expect(p.holder).to.equal(patient.address);
+      expect(p.coverageLimit).to.equal(BASIC.limit);
+      expect(p.usedAmount).to.equal(0n);
+      expect(p.expiryDate).to.equal(now + 30n * 86400n);
+      expect(p.encryptedHealthId).to.equal("enc-health-id");
+      expect(await c.activePolicyOf(patient.address)).to.equal(1n);
+      expect(await c.tokenURI(1)).to.equal("ipfs://mock-cid-policy-basic");
+      expect(await c.totalPolicies()).to.equal(1n);
+    });
+    it("T10 gui sai so ETH (thieu/thua) bi revert", async function () {
+      const { c, patient } = await loadFixture(deployFixture);
+      await expect(c.connect(patient).purchasePolicy(1, "id", { value: BASIC.price - 1n })).to.be.revertedWith("Sai so tien thanh toan");
+      await expect(c.connect(patient).purchasePolicy(1, "id", { value: BASIC.price + 1n })).to.be.revertedWith("Sai so tien thanh toan");
+    });
+    it("T11 mua khi da co goi con han bi revert", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await expect(c.connect(patient).purchasePolicy(2, "id", { value: PREMIUM.price })).to.be.revertedWith("Da co goi bao hiem con han");
+    });
+    it("T12 chuyen nhuong NFT bi revert Soulbound", async function () {
+      const { c, patient, outsider } = await loadFixture(boughtFixture);
+      await expect(c.connect(patient).transferFrom(patient.address, outsider.address, 1)).to.be.revertedWith("Soulbound: khong the chuyen nhuong");
+      await expect(c.connect(patient)["safeTransferFrom(address,address,uint256)"](patient.address, outsider.address, 1)).to.be.revertedWith("Soulbound: khong the chuyen nhuong");
+    });
+    it("T13 verifyInsurance: vi co the con han", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      const p = await c.getPolicy(1);
+      const r = await c.verifyInsurance(patient.address);
+      expect(r.isValid).to.equal(true);
+      expect(r.tokenId).to.equal(1n);
+      expect(r.remainingLimit).to.equal(BASIC.limit);
+      expect(r.expiryDate).to.equal(p.expiryDate);
+    });
+    it("T14 verifyInsurance: vi khong co the", async function () {
+      const { c, outsider } = await loadFixture(boughtFixture);
+      const r = await c.verifyInsurance(outsider.address);
+      expect(r.isValid).to.equal(false);
+      expect(r.tokenId).to.equal(0n);
+      expect(r.remainingLimit).to.equal(0n);
+      expect(r.expiryDate).to.equal(0n);
+    });
+    it("T15 verifyInsurance sau khi het han", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await time.increase(31 * DAY);
+      expect((await c.verifyInsurance(patient.address)).isValid).to.equal(false);
+    });
+    it("Them: het han roi duoc mua goi moi", async function () {
+      const { c, patient } = await loadFixture(boughtFixture);
+      await time.increase(31 * DAY);
+      await c.connect(patient).purchasePolicy(2, "id2", { value: PREMIUM.price });
+      expect(await c.activePolicyOf(patient.address)).to.equal(2n);
+      expect((await c.verifyInsurance(patient.address)).isValid).to.equal(true);
+    });
   });
 
   describe("Bao mat nang cao", function () {
