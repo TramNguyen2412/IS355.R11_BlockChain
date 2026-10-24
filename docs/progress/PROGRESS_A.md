@@ -10,29 +10,28 @@ Cập nhật lần cuối: 24/10/2026
 - [x] A05 — Nghiệp vụ 2: Mua bảo hiểm, thẻ NFT, xác minh thẻ (purchasePolicy, verifyInsurance, tokenURI, soulbound + 18 test passing). Báo cáo: docs/plan/A/reports/REPORT_A05.md
 - [x] A06 — Nghiệp vụ 3: Yêu cầu bồi thường (submitClaim, confirmClaim RBAC HOSPITAL_ROLE + 26 test passing). Báo cáo: docs/plan/A/reports/REPORT_A06.md
 - [x] A07 — Nghiệp vụ 4: Duyệt và chi trả tự động (approveClaim, rejectClaim, ràng buộc logic số 2, chống reentrancy + 34 test passing). Báo cáo: docs/plan/A/reports/REPORT_A07.md
+- [x] A08 — Script nạp dữ liệu mẫu seed.js, bảng gas và bàn giao H3. Báo cáo: docs/plan/A/reports/REPORT_A08.md
 
 ## Bước tiếp theo
-- Chặng A08: Script nạp dữ liệu mẫu seed.js và xuất ABI cuối (mốc H3) (`docs/plan/A/A08_seed_va_ban_giao_H3.md`).
+- Chặng A09: Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (`docs/plan/A/A09_bv_khoa_va_kiem_tra_the.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A07 đã hoàn thành (toàn bộ 4 nghiệp vụ contract hoàn chỉnh)
-- Bước tiếp theo (làm ngay): Chặng A08
+- Task hiện tại: A08 đã hoàn thành (mốc bàn giao H3 sẵn sàng)
+- Bước tiếp theo (làm ngay): Chặng A09
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `contracts-hardhat/contracts/HealthInsuranceNFT.sol` — sửa (hoàn thiện toàn bộ contract)
-- `contracts-hardhat/contracts/mocks/ReentrancyAttacker.sol` — tạo mới (phục vụ test T31)
-- `contracts-hardhat/test/HealthInsuranceNFT.test.js` — sửa (34 test case)
-- `docs/plan/A/reports/REPORT_A07.md` — tạo mới
+- `contracts-hardhat/scripts/seed.js` — tạo mới
+- `docs/plan/A/reports/REPORT_A08.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Ràng buộc logic số 2: approveClaim tuân thủ nghiêm ngặt Checks -> Effects -> Interactions, chống reentrancy qua nonReentrant; chi trả tự động đúng số confirmedAmount về ví bệnh nhân.
+- Mốc H3: Contract hoàn chỉnh trên local, script seed.js khởi tạo 2 gói mẫu + quyền bệnh viện + 0.1 ETH quỹ, ABI cuối cùng sẵn sàng cho cả nhóm.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- Không có.
+- [ ] Gửi cả nhóm (B, C): "H3 xong: contract hoàn chỉnh trên local + seed.js + ABI cuối. Chạy npx hardhat node, deploy.js, seed.js rồi đổi VITE_USE_MOCK=false để phát triển giao diện."
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd contracts-hardhat && npx hardhat test`  Kết quả: 34 passing (1s).
+- Lệnh: `cd contracts-hardhat && npx hardhat run scripts/seed.js --network localhost`  Kết quả: Da tao 2 goi mau / Da cap quyen benh vien / Quy hien tai: 0.1 ETH.
