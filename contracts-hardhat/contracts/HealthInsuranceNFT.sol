@@ -212,14 +212,37 @@ contract HealthInsuranceNFT is ERC721, AccessControl, ReentrancyGuard {
     }
 
     // ===================== NGHIEP VU 4: DUYET VA CHI TRA TU DONG =====================
-    // TODO A07
 
-    function approveClaim(uint256 claimId) external {
-        revert("TODO");
+    /// RANG BUOC 2: tu kiem tra han muc, han dung, quy; Checks -> Effects -> Interactions
+    function approveClaim(uint256 claimId) external nonReentrant {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        require(c.hospitalConfirmed, "Benh vien chua xac nhan");
+
+        uint256 amt = c.confirmedAmount;
+        Policy storage p = policies[c.tokenId];
+        require(block.timestamp <= p.expiryDate, "Bao hiem da het han");
+        require(p.usedAmount + amt <= p.coverageLimit, "Vuot qua han muc bao hiem");
+        require(address(this).balance >= amt, "Quy bao hiem khong du");
+
+        c.status = ClaimStatus.APPROVED;
+        c.resolvedAt = block.timestamp;
+        p.usedAmount += amt;
+
+        (bool ok, ) = payable(c.patient).call{value: amt}("");
+        require(ok, "Chuyen tien that bai");
+        emit ClaimApproved(claimId, c.patient, amt);
     }
 
-    function rejectClaim(uint256 claimId, string calldata reason) external {
-        revert("TODO");
+    /// Admin tu choi claim
+    function rejectClaim(uint256 claimId, string calldata reason) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(claimId != 0 && claimId <= totalClaims, "Khong tim thay yeu cau boi thuong");
+        Claim storage c = claims[claimId];
+        require(c.status == ClaimStatus.PENDING, "Claim da xu ly");
+        c.status = ClaimStatus.REJECTED;
+        c.resolvedAt = block.timestamp;
+        emit ClaimRejected(claimId, reason);
     }
 
     // ===================== HAM DOC =====================

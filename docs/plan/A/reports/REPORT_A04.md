@@ -1,6 +1,5 @@
 # BÁO CÁO CHẶNG A04 — Nghiệp vụ 1: Thiết lập hệ thống (contract + test)
 - Ngày giờ: 2026-10-24 21:22
-- Mô hình/công cụ AI: Gemini 3.8 Flash (Medium)
 - Nhánh git: tram
 
 ## 1. Kết luận một dòng

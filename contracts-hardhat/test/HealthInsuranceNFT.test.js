@@ -208,7 +208,91 @@ describe("HealthInsuranceNFT", function () {
     });
   });
 
+  describe("Duyet va chi tra", function () {
+    async function claimFixture() {
+      const base = await boughtFixture();
+      await base.c.connect(base.patient).submitClaim(1, CLAIM1, "mock-cid-bill-01", "mock-cid-record-01");
+      return base;
+    }
+    it("T24 approveClaim khi benh vien chua xac nhan bi revert", async function () {
+      const { c } = await loadFixture(claimFixture);
+      await expect(c.approveClaim(1)).to.be.revertedWith("Benh vien chua xac nhan");
+    });
+    it("T25 approveClaim hop le: chi tra dung so tien", async function () {
+      const { c, hospital, patient, outsider } = await loadFixture(claimFixture);
+      await c.connect(hospital).confirmClaim(1, CLAIM1);
+      const contractAddr = await c.getAddress();
+      const patientBefore = await ethers.provider.getBalance(patient.address);
+      const contractBefore = await ethers.provider.getBalance(contractAddr);
+      // nguoi goi la ben thu ba -> ETH ve ve benh nhan, khong ton gas cua benh nhan
+      await expect(c.connect(outsider).approveClaim(1)).to.emit(c, "ClaimApproved").withArgs(1, patient.address, CLAIM1);
+      expect(await ethers.provider.getBalance(patient.address)).to.equal(patientBefore + CLAIM1);
+      expect(await ethers.provider.getBalance(contractAddr)).to.equal(contractBefore - CLAIM1);
+      const cl = await c.getClaim(1);
+      expect(cl.status).to.equal(1n);
+      expect(cl.resolvedAt).to.be.gt(0n);
+      const p = await c.getPolicy(1);
+      expect(p.usedAmount).to.equal(CLAIM1);
+      expect((await c.verifyInsurance(patient.address)).remainingLimit).to.equal(ethers.parseEther("0.008"));
+    });
+    it("T26 approveClaim lan 2 bi revert", async function () {
+      const { c, hospital } = await loadFixture(claimFixture);
+      await c.connect(hospital).confirmClaim(1, CLAIM1);
+      await c.approveClaim(1);
+      await expect(c.approveClaim(1)).to.be.revertedWith("Claim da xu ly");
+    });
+    it("T27 hai claim, tong vuot han muc: claim sau bi revert khi duyet", async function () {
+      const { c, hospital, patient } = await loadFixture(claimFixture);
+      await c.connect(patient).submitClaim(1, CLAIM2, "b2", "r2"); // 0.015 <= con lai 0.02 nen gui duoc
+      await c.connect(hospital).confirmClaim(1, CLAIM1);
+      await c.connect(hospital).confirmClaim(2, CLAIM2);
+      await c.approveClaim(1);
+      await expect(c.approveClaim(2)).to.be.revertedWith("Vuot qua han muc bao hiem");
+      // kich ban 6.3: gui claim 0.015 sau khi da dung 0.012 -> bi chan ngay luc gui
+      await expect(c.connect(patient).submitClaim(1, CLAIM2, "b3", "r3")).to.be.revertedWith("Vuot qua han muc bao hiem");
+    });
+    it("T28 quy khong du bi revert", async function () {
+      // trien khai moi, KHONG nap quy: chi co tien phi 0.002 ETH trong contract
+      const [admin, hospital, patient] = await ethers.getSigners();
+      const c = await (await ethers.getContractFactory("HealthInsuranceNFT")).deploy();
+      await c.createPlan(BASIC.name, BASIC.price, BASIC.limit, BASIC.days, BASIC.cid);
+      await c.authorizeHospital(hospital.address, true);
+      await c.connect(patient).purchasePolicy(1, "id", { value: BASIC.price });
+      await c.connect(hospital).submitClaim(1, CLAIM1, "b", "r");
+      await expect(c.approveClaim(1)).to.be.revertedWith("Quy bao hiem khong du");
+    });
+    it("T29 rejectClaim boi admin: REJECTED, khong mat tien quy", async function () {
+      const { c, patient } = await loadFixture(claimFixture);
+      const before = await c.poolBalance();
+      await expect(c.rejectClaim(1, "nghi ngo gian lan")).to.emit(c, "ClaimRejected").withArgs(1, "nghi ngo gian lan");
+      expect((await c.getClaim(1)).status).to.equal(2n);
+      expect(await c.poolBalance()).to.equal(before);
+      await expect(c.rejectClaim(1, "lan 2")).to.be.revertedWith("Claim da xu ly");
+    });
+    it("T30 rejectClaim boi vi la bi revert", async function () {
+      const { c, outsider } = await loadFixture(claimFixture);
+      await expect(c.connect(outsider).rejectClaim(1, "x")).to.be.revertedWithCustomError(c, "AccessControlUnauthorizedAccount");
+    });
+  });
+
   describe("Bao mat nang cao", function () {
+    it("T31 reentrancy: goi lai approveClaim bi chan, chi nhan tien 1 lan", async function () {
+      const { c, hospital } = await loadFixture(deployFixture);
+      const Attacker = await ethers.getContractFactory("ReentrancyAttacker");
+      const atk = await Attacker.deploy(await c.getAddress());
+      await atk.waitForDeployment();
+      await atk.buy(1, { value: BASIC.price });
+      expect(await c.ownerOf(1)).to.equal(await atk.getAddress());
+      await atk.submit(1, CLAIM1);
+      await c.connect(hospital).confirmClaim(1, CLAIM1);
+      const before = await ethers.provider.getBalance(await atk.getAddress());
+      await atk.attack(1);
+      const after = await ethers.provider.getBalance(await atk.getAddress());
+      expect(after - before).to.equal(CLAIM1);       // nhan dung 1 lan
+      expect(await atk.reentryBlocked()).to.equal(true);
+      expect(await atk.reentrySucceeded()).to.equal(0n);
+      expect((await c.getPolicy(1)).usedAmount).to.equal(CLAIM1);
+    });
     it("T32 fundPool cong dung vao poolBalance", async function () {
       const [admin] = await ethers.getSigners();
       const c = await (await ethers.getContractFactory("HealthInsuranceNFT")).deploy();

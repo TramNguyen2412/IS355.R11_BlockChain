@@ -1,6 +1,5 @@
 # BÁO CÁO CHẶNG A06 — Nghiệp vụ 3: Gửi yêu cầu bồi thường và bệnh viện xác nhận
 - Ngày giờ: 2026-10-24 21:58
-- Mô hình/công cụ AI: Gemini 3.8 Flash (Medium)
 - Nhánh git: tram
 
 ## 1. Kết luận một dòng
