@@ -1,0 +1,165 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #1f2937;
+  background: #f5f7fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: #1d4ed8;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 5%;
+  background: #ffffff;
+  border-bottom: 1px solid #dbe2ea;
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.app-header p {
+  margin: 0;
+  color: #526071;
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.main-nav a {
+  padding: 8px 0;
+  text-decoration: none;
+}
+
+.main-nav a.active {
+  color: #1e40af;
+  font-weight: 700;
+  border-bottom: 2px solid currentColor;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.app-footer {
+  padding: 18px 24px;
+  color: #526071;
+  text-align: center;
+  background: #ffffff;
+  border-top: 1px solid #dbe2ea;
+}
+
+.loading {
+  padding: 24px;
+  text-align: center;
+}
+
+.error-box {
+  padding: 16px;
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.error-box p {
+  margin-bottom: 0;
+}
+
+.address {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.address button {
+  padding: 6px 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.tx-toast {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.tx-toast p {
+  margin: 0;
+}
+
+.tx-toast p + p {
+  margin-top: 8px;
+}
+
+.tx-toast--processing {
+  background: #eff6ff;
+}
+
+.tx-toast--success {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.tx-toast--error {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 24px 16px;
+  }
+}
