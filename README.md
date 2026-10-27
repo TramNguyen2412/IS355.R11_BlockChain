@@ -43,12 +43,79 @@
 ##  Hướng dẫn cài đặt và chạy dự án
 
 ### Yêu cầu hệ thống
-- Node.js (phiên bản LTS >= 18)
-- Tiện ích mở rộng ví MetaMask trên trình duyệt
-- Mạng: Sepolia Testnet (cần có sẵn Sepolia ETH để giao dịch)
+- Node.js: v24.11.0 (môi trường đã kiểm thử).
+- npm: 11.6.1 (môi trường đã kiểm thử).
+- Frontend sử dụng Vite 7.3.7.
+- Tiện ích mở rộng ví MetaMask trên trình duyệt.
+- Mạng Sepolia Testnet và Sepolia ETH nếu chạy với hợp đồng thật.
 
 ### Các bước cài đặt
 1. **Clone repository về máy:**
    ```bash
-   git clone [https://github.com/TramNguyen2412/IS355.R11_BlockChain.git](https://github.com/TramNguyen2412/IS355.R11_BlockChain.git) MediChain
+   git clone https://github.com/TramNguyen2412/IS355.R11_BlockChain.git MediChain
    cd MediChain
+
+### Chạy frontend bằng dữ liệu giả lập (Mock)
+
+Chế độ mock dùng dữ liệu trong bộ nhớ để phát triển và kiểm thử frontend mà không cần kết nối smart contract thật.
+
+#### 1. Yêu cầu
+
+- Node.js phiên bản LTS từ 18 trở lên.
+- npm đi kèm Node.js.
+
+#### 2. Cài đặt frontend
+
+Từ thư mục gốc của repository:
+
+```powershell
+cd frontend
+npm.cmd install
+```
+
+#### 3. Bật chế độ mock
+
+Tạo file `frontend/.env.local` với nội dung:
+
+```dotenv
+VITE_USE_MOCK=true
+```
+
+Nếu đang ở thư mục `frontend`, chỉ cần tạo `.env.local` ngay tại đó. Không commit các file chứa khóa bí mật hoặc thông tin nhạy cảm.
+
+#### 4. Chạy ứng dụng
+
+Tại thư mục `frontend`:
+
+```powershell
+npm.cmd run dev
+```
+
+Mở địa chỉ local do Vite hiển thị trong terminal.
+
+#### 5. Kiểm tra điều hướng theo vai trò
+
+Chọn từng ví mẫu trên giao diện và kiểm tra kết quả:
+
+| Ví mẫu | Route mong đợi |
+|---|---|
+| HOSPITAL | `/hospital` |
+| ADMIN | `/insurer` |
+| PATIENT | `/patient` |
+| OUTSIDER | `/patient` |
+
+#### 6. Kiểm tra build
+
+Tại thư mục `frontend`:
+
+```powershell
+npm.cmd run build
+```
+
+Build thành công khi Vite kết thúc mà không có lỗi. Cảnh báo kích thước bundle không đồng nghĩa với build thất bại.
+
+#### Lưu ý
+
+- Dữ liệu mock chỉ tồn tại trong bộ nhớ; thay đổi có thể mất khi tải lại ứng dụng.
+- Mock không đại diện cho giao dịch blockchain thật.
+- Khi `VITE_USE_MOCK=false`, các hàm contract chưa triển khai sẽ báo lỗi `Chưa cài đặt`
