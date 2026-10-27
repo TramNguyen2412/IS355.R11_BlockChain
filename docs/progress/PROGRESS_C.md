@@ -76,6 +76,6 @@ Cấu hình mock cục bộ trong frontend/.env.local:
 - VITE_USE_MOCK=true
 - Có thể dùng VITE_CHAIN_ID=31337 cho cấu hình mạng phát triển tương ứng. Không cần commit .env.local.
 
-Kết quả build gần nhất: thành công; Vite 7.3.7, 48 modules transformed, thời gian 5.08 giây. Có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify; đây là cảnh báo tối ưu bundle, không phải lỗi build.
+Kết quả build gần nhất: thành công; Vite 7.3.7, 200 modules transformed, thời gian 5.08 giây. Có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify; đây là cảnh báo tối ưu bundle, không phải lỗi build.
 
 Giới hạn kiểm thử: Đã kiểm tra các hàm đọc, ghi, phân quyền và dryRun của mock service; các kiểm tra đã chạy đều đạt. Build production thành công và đã kiểm tra thủ công điều hướng bốn địa chỉ mock ADMIN, HOSPITAL, PATIENT, OUTSIDER đến các route dự kiến. Dữ liệu mock chỉ tồn tại trong bộ nhớ. Chưa kiểm thử giao dịch với hợp đồng blockchain thật, chưa xác nhận tích hợp nghiệp vụ thực tế với hợp đồng đã triển khai. Build có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify nhưng không thất bại.
