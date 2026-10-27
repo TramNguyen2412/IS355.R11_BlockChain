@@ -118,4 +118,4 @@ Build thành công khi Vite kết thúc mà không có lỗi. Cảnh báo kích 
 
 - Dữ liệu mock chỉ tồn tại trong bộ nhớ; thay đổi có thể mất khi tải lại ứng dụng.
 - Mock không đại diện cho giao dịch blockchain thật.
-- Khi `VITE_USE_MOCK=false`, các hàm contract chưa triển khai sẽ báo lỗi `Chưa cài đặt`.
+- Khi `VITE_USE_MOCK=false`, các hàm contract chưa triển khai sẽ báo lỗi `Chưa cài đặt`
