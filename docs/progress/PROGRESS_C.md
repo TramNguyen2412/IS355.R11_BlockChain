@@ -1,19 +1,19 @@
 # PROGRESS — Thành viên C (Lan Anh)
-Cập nhật lần cuối: 27/10/2026
+Cập nhật lần cuối: 30/10/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `lan-anh`
 - [x] C-02 — Khởi tạo frontend bằng Vite + React (JavaScript). Cấu hình package.json, vite.config.js, index.html. Tạo src/main.jsx và src/app/App.jsx với các route /patient, /hospital, /insurer. Tạo các component dùng chung: Layout.jsx, Loading.jsx, Address.jsx, ErrorBox.jsx, TxToast.jsx. Tạo src/styles/global.css với nền sáng, chữ tối và cỡ chữ cơ bản 16px. Tạo giao diện khung PatientPage.jsx. Tạo InsurerPage.jsx dạng stub tạm để kiểm tra router; chưa triển khai nghiệp vụ Insurer. Cài dependencies bằng npm.cmd install. Kiểm tra điều hướng ba trang trên trình duyệt. Chạy npm.cmd run build thành công.
 - [x] C-03 — Tạo `frontend/src/app/errors.js` để chuyển các lỗi nghiệp vụ và lỗi MetaMask sang thông báo tiếng Việt; tạo `frontend/src/app/format.js` với `formatEth`, `formatDate`, `shortAddress`; tạo `frontend/src/app/WalletProvider.jsx` quản lý context ví, kết nối MetaMask, kiểm tra chain ID và lắng nghe `accountsChanged`/`chainChanged`. Tích hợp `WalletProvider` vào `App.jsx`. Kiểm tra `npm.cmd run build` thành công; chạy frontend với `VITE_USE_MOCK=true`, xác nhận danh sách bốn ví mẫu xuất hiện và địa chỉ thay đổi theo vai trò đã chọn.
 - [x] C-04 — Mock service và điều hướng theo vai trò: Tạo `frontend/src/app/contractService.mock.js` với dữ liệu khởi tạo gồm 2 gói bảo hiểm, 1 policy, 3 claim, số dư pool 0.1 ETH và các địa chỉ mẫu ADMIN, HOSPITAL, PATIENT, OUTSIDER; Tạo `frontend/src/app/contractService.js` để chọn mock theo biến môi trường VITE_USE_MOCK; khi chưa sử dụng mock, các hàm tương ứng báo lỗi chưa cài đặt thay vì giả lập giao dịch hợp đồng thật; Tạo `frontend/src/app/roleDetection.js` để xác định vai trò thông qua getRoles; Tích hợp điều hướng theo vai trò trong `frontend/src/app/App.jsx`: insurer → /insurer, hospital → /hospital, patient/outsider → /patient; Cập nhật `README.md` hướng dẫn chạy frontend ở chế độ mock và lưu ý dữ liệu mock chỉ tồn tại trong bộ nhớ, không được lưu bền vững; Kiểm thử các hàm đọc, ghi, phân quyền và dryRun của mock service. Các kiểm tra đã chạy đều đạt: kiểm tra đọc đạt sau khi điều chỉnh cách so sánh chuỗi Unicode; 13 kiểm tra ghi đạt; 15/15 kiểm tra bổ sung về quyền và dryRun đạt; Chạy `npm.cmd run build` thành công với Vite 7.3.7, 200 modules transformed. Build có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify nhưng không thất bại; Phạm vi kiểm thử là frontend và mock service; chưa xác nhận tích hợp nghiệp vụ thực tế với MetaMask hoặc hợp đồng blockchain đã triển khai.
-
+- [x] **C-05 — Tích hợp frontend với smart contract thật:** Triển khai `frontend/src/app/contractService.js` sử dụng ethers v6 và `BrowserProvider`; đọc ABI từ `frontend/src/contracts/abi.json`, địa chỉ và `deployBlock` từ `frontend/src/contracts/address.json`; kiểm tra MetaMask và Chain ID; triển khai các hàm đọc dữ liệu, ghi giao dịch, `dryRun` bằng `.staticCall()`, chuyển đổi dữ liệu Solidity struct sang JavaScript object, xử lý lỗi tiếng Việt bằng `toVietnameseError`, truy vấn sự kiện bằng `queryFilter()` và tổng hợp thống kê từ event. Kiểm thử trên Hardhat Local (Chain ID 31337): 10/10 hàm ghi dữ liệu chạy `dryRun` thành công; kiểm thử giao dịch thật thành công với các luồng đăng ký khóa mã hóa, mua bảo hiểm, gửi claim, xác nhận claim, duyệt claim và từ chối claim. Kiểm tra dữ liệu đọc được gồm 2 gói bảo hiểm, 1 policy, 2 claim; trạng thái claim gồm 1 APPROVED và 1 REJECTED; `getEvents()` truy vấn được 11 sự kiện; `getStats()` trả về số liệu phù hợp với dữ liệu blockchain. Chạy `npm.cmd run build` thành công với Vite 7.3.7, 201 modules transformed. Build có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify nhưng không thất bại. Phạm vi kiểm thử là tích hợp frontend với hợp đồng trên Hardhat Local; chưa xác nhận triển khai và kiểm thử trên Sepolia.
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: Hoàn tất C-04 về mặt triển khai và kiểm thử mock; đang rà soát staged diff để chuẩn bị commit riêng cho C-04.
-
-Đã xác nhận: git --no-pager diff --check không báo lỗi; tại lần kiểm tra gần nhất, chỉ có docs/progress/PROGRESS_C.md xuất hiện là file đã sửa trong git status --short.
-
-- Bước tiếp theo: Xác nhận các nội dung trên, stage đúng các file thuộc C-04, kiểm tra staged diff rồi mới commit và push nhánh lan-anh.
+- Task hiện tại: C-05 đã hoàn thành phần triển khai và kiểm thử contract service trên Hardhat Local.
+- Đã chạy `npm.cmd run build` thành công.
+- Đã kiểm tra `git diff --check` không báo lỗi.
+- Các thay đổi hiện tại gồm `frontend/src/app/contractService.js` và `frontend/src/components/shared/Layout.jsx`. Trong đó, `Layout.jsx` có thay đổi tích hợp giao diện ví, không thuộc phạm vi C-05; cần giữ riêng và không gộp vào commit C-05.
+- Bước tiếp theo: Rà soát staged diff, cập nhật tiến độ và commit riêng các file thuộc C-05.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
 `C-02 — Khởi tạo frontend`
@@ -44,6 +44,9 @@ Cập nhật lần cuối: 27/10/2026
 - frontend/src/app/roleDetection.js
 - frontend/src/app/App.jsx
 - README.md
+
+`C-05 — Tích hợp smart contract thật`
+- frontend/src/app/contractService.js — triển khai ethers v6, các hàm đọc/ghi contract, dryRun, xử lý lỗi, truy vấn event và thống kê.
 
 `Theo dõi tiến độ`
 - docs/progress/PROGRESS_C.md
@@ -76,6 +79,6 @@ Cấu hình mock cục bộ trong frontend/.env.local:
 - VITE_USE_MOCK=true
 - Có thể dùng VITE_CHAIN_ID=31337 cho cấu hình mạng phát triển tương ứng. Không cần commit .env.local.
 
-Kết quả build gần nhất: thành công; Vite 7.3.7, 200 modules transformed, thời gian 5.08 giây. Có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify; đây là cảnh báo tối ưu bundle, không phải lỗi build.
+Kết quả build gần nhất: `npm.cmd run build` thành công với Vite 7.3.7, 201 modules transformed, thời gian 2.78 giây. Có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify; đây là cảnh báo tối ưu bundle, không phải lỗi build.
 
-Giới hạn kiểm thử: Đã kiểm tra các hàm đọc, ghi, phân quyền và dryRun của mock service; các kiểm tra đã chạy đều đạt. Build production thành công và đã kiểm tra thủ công điều hướng bốn địa chỉ mock ADMIN, HOSPITAL, PATIENT, OUTSIDER đến các route dự kiến. Dữ liệu mock chỉ tồn tại trong bộ nhớ. Chưa kiểm thử giao dịch với hợp đồng blockchain thật, chưa xác nhận tích hợp nghiệp vụ thực tế với hợp đồng đã triển khai. Build có cảnh báo chunk JavaScript lớn hơn 500 kB sau minify nhưng không thất bại.
+Giới hạn kiểm thử: C-04 đã kiểm thử mock service; C-05 đã kiểm thử tích hợp với smart contract thật trên Hardhat Local, bao gồm các hàm đọc, ghi, phân quyền, dryRun, giao dịch thật, truy vấn event và thống kê. Chưa kiểm thử triển khai trên Sepolia và chưa xác nhận tích hợp hoàn chỉnh các trang nghiệp vụ Patient, Hospital, Insurer với contract service.
