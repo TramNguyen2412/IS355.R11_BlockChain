@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "visitDate": "2030-01-02",
+    "hospitalName": "Bệnh viện Mẫu",
+    "billCID": "mock-cid-bill-01"
+  },
+  "secret": {
+    "patientName": "Nguyễn Văn Mẫu",
+    "healthId": "HS4010123456789",
+    "diagnosis": "Viêm ruột thừa cấp",
+    "treatment": "Phẫu thuật nội soi cắt ruột thừa",
+    "labResults": [
+      {
+        "test": "Bạch cầu",
+        "value": "13.2",
+        "unit": "G/L"
+      },
+      {
+        "test": "CRP",
+        "value": "48",
+        "unit": "mg/L"
+      }
+    ],
+    "doctor": "BS. Trần Mẫu",
+    "totalCost": "12000000000000000"
+  }
+}
