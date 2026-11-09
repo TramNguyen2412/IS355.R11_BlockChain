@@ -1,5 +1,5 @@
 # PROGRESS — Thành viên A (Trâm)
-Cập nhật lần cuối: 24/10/2026
+Cập nhật lần cuối: 09/11/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `tram`
@@ -11,27 +11,32 @@ Cập nhật lần cuối: 24/10/2026
 - [x] A06 — Nghiệp vụ 3: Yêu cầu bồi thường (submitClaim, confirmClaim RBAC HOSPITAL_ROLE + 26 test passing). Báo cáo: docs/plan/A/reports/REPORT_A06.md
 - [x] A07 — Nghiệp vụ 4: Duyệt và chi trả tự động (approveClaim, rejectClaim, ràng buộc logic số 2, chống reentrancy + 34 test passing). Báo cáo: docs/plan/A/reports/REPORT_A07.md
 - [x] A08 — Script nạp dữ liệu mẫu seed.js, bảng gas và bàn giao H3. Báo cáo: docs/plan/A/reports/REPORT_A08.md
+- [x] A09 — Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (KeySetup.jsx, VerifyCard.jsx, hospital.css, HospitalPage.jsx; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A09.md
 
 ## Bước tiếp theo
-- Chặng A09: Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (`docs/plan/A/A09_bv_khoa_va_kiem_tra_the.md`).
+- Chặng A10: Thử deploy Sepolia sớm (`docs/plan/A/A10_thu_sepolia.md`) hoặc Chặng A11: Form gửi yêu cầu bồi thường (`docs/plan/A/A11_bv_gui_claim.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A08 đã hoàn thành (mốc bàn giao H3 sẵn sàng)
-- Bước tiếp theo (làm ngay): Chặng A09
+- Task hiện tại: A09 đã hoàn thành (màn hình Bệnh viện khối 1 và 2 sẵn sàng).
+- Bước tiếp theo: Chặng A10 hoặc A11.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `contracts-hardhat/scripts/seed.js` — tạo mới
-- `docs/plan/A/reports/REPORT_A08.md` — tạo mới
+- `frontend/src/pages/hospital/hospital.css` — tạo mới
+- `frontend/src/pages/hospital/KeySetup.jsx` — tạo mới
+- `frontend/src/pages/hospital/VerifyCard.jsx` — tạo mới
+- `frontend/src/pages/hospital/HospitalPage.jsx` — sửa
+- `docs/plan/A/reports/REPORT_A09.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Mốc H3: Contract hoàn chỉnh trên local, script seed.js khởi tạo 2 gói mẫu + quyền bệnh viện + 0.1 ETH quỹ, ABI cuối cùng sẵn sàng cho cả nhóm.
+- Component `KeySetup.jsx` và `VerifyCard.jsx` dùng CSS riêng biệt trong `hospital.css`, không sửa `global.css`.
+- Đảm bảo kiểm tra phân quyền `isHospital` và `dryRun` trước mọi thao tác on-chain.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- [ ] Gửi cả nhóm (B, C): "H3 xong: contract hoàn chỉnh trên local + seed.js + ABI cuối. Chạy npx hardhat node, deploy.js, seed.js rồi đổi VITE_USE_MOCK=false để phát triển giao diện."
+- [ ] Gửi Lan Anh (C): Bổ sung lại switch `useMock` trong `frontend/src/app/contractService.js` để khi `VITE_USE_MOCK=true` ứng dụng chuyển tiếp sang `contractService.mock.js` mà không đòi hỏi kết nối MetaMask.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd contracts-hardhat && npx hardhat run scripts/seed.js --network localhost`  Kết quả: Da tao 2 goi mau / Da cap quyen benh vien / Quy hien tai: 0.1 ETH.
+- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~2.3s, không có lỗi module.
