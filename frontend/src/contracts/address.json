@@ -1,7 +1,7 @@
 {
-  "chainId": 31337,
-  "network": "localhost",
-  "HealthInsuranceNFT": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-  "insurer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "deployBlock": 1
+  "chainId": 11155111,
+  "network": "sepolia",
+  "HealthInsuranceNFT": "0x9B5868254c31818320d2DDCBb5B28f15af265b62",
+  "insurer": "0x81D07c2F407c4450c8920980dBBFd6997AD015C4",
+  "deployBlock": 12103715
 }

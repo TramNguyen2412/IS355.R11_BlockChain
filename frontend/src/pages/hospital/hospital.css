@@ -1,0 +1,13 @@
+.hospital-page { max-width: 960px; margin: 0 auto; padding: 16px; }
+.hospital-card { border: 1px solid #c9ced6; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ffffff; }
+.hospital-card h2 { margin-top: 0; font-size: 20px; }
+.hospital-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+.hospital-input { flex: 1; min-width: 260px; padding: 10px; font-size: 16px; border: 1px solid #8a93a0; border-radius: 6px; }
+.hospital-btn { padding: 10px 16px; font-size: 16px; border: 0; border-radius: 6px; background: #1f5fbf; color: #ffffff; cursor: pointer; }
+.hospital-btn:disabled { background: #9aa3b0; cursor: not-allowed; }
+.hospital-ok { color: #11672b; font-weight: 600; }
+.hospital-bad { color: #a11a1a; font-weight: 600; }
+.hospital-warn { color: #7a4b00; }
+.hospital-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.hospital-table th, .hospital-table td { border: 1px solid #c9ced6; padding: 8px; text-align: left; font-size: 16px; }
+.hospital-table th { background: #eef1f5; }

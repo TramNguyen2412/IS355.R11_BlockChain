@@ -133,7 +133,7 @@ Dùng số tiền nhỏ vì ETH Sepolia hạn chế (nên mua/chuẩn bị đủ
 |---|---|
 | Gói "Cơ bản": giá / hạn mức / thời hạn | 0.002 ETH / 0.02 ETH / 30 ngày |
 | Gói "Nâng cao": giá / hạn mức / thời hạn | 0.005 ETH / 0.05 ETH / 90 ngày |
-| Quỹ bảo hiểm nạp trước | 0.1 ETH (đủ trả vài claim) |
+| Quỹ bảo hiểm nạp trước | 0.03 ETH trên Sepolia (0.1 trên local), nạp thêm khi cần |
 | Claim 1 (hợp lệ) | 0.012 ETH → còn hạn mức 0.008 |
 | Claim 2 (cố ý vượt hạn mức) | 0.015 ETH |
 
