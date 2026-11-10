@@ -20,6 +20,7 @@ export default function SubmitClaimForm({ verified }) {
   const [doctor, setDoctor] = useState("");
   const [labs, setLabs] = useState([emptyLab()]);
   const [billFile, setBillFile] = useState(null);
+  const [fileKey, setFileKey] = useState(0);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -98,6 +99,8 @@ export default function SubmitClaimForm({ verified }) {
       // ---- 6. Gửi claim lên blockchain ----
       setStatus("Đang gửi yêu cầu bồi thường lên blockchain (hãy xác nhận trong MetaMask)...");
       const tx = await contractService.submitClaim({ tokenId: verified.tokenId, amount, billCID, recordCID });
+      setAmountEth(""); setPatientName(""); setHealthId(""); setDiagnosis(""); setTreatment(""); setDoctor("");
+      setLabs([emptyLab()]); setBillFile(null); setFileKey((k) => k + 1);
       setDone({ hash: tx.hash, billCID, recordCID });
       setStatus("");
     } catch (err) {
@@ -136,7 +139,7 @@ export default function SubmitClaimForm({ verified }) {
         ))}
         <button type="button" className="hospital-btn" disabled={busy} onClick={() => setLabs((p) => [...p, emptyLab()])}>+ Thêm dòng xét nghiệm</button>
         <div className="hospital-row">
-          <label>Hóa đơn (ảnh hoặc PDF): <input type="file" accept="image/*,application/pdf" onChange={(e) => setBillFile(e.target.files[0] || null)} disabled={busy} /></label>
+          <label>Hóa đơn (ảnh hoặc PDF): <input key={fileKey} type="file" accept="image/*,application/pdf" onChange={(e) => setBillFile(e.target.files[0] || null)} disabled={busy} /></label>
         </div>
         <div className="hospital-row">
           <button type="submit" className="hospital-btn" disabled={busy}>Gửi yêu cầu bồi thường</button>

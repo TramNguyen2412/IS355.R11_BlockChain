@@ -31,6 +31,7 @@ export default function VerifyCard({ onVerified }) {
 
   async function handleVerify() {
     setError(""); setResult(null);
+    if (onVerified) onVerified(null);
     if (!ethers.isAddress(patient.trim())) { setError("Địa chỉ ví không hợp lệ."); return; }
     setBusy(true);
     try {

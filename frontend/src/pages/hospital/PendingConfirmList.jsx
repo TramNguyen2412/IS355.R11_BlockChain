@@ -65,6 +65,7 @@ export default function PendingConfirmList() {
   return (
     <section className="hospital-card">
       <h2>4. Yêu cầu chờ bệnh viện xác nhận chi phí</h2>
+      <p className="hospital-warn">Danh sách này chỉ gồm yêu cầu do bệnh nhân tự gửi. Yêu cầu do bệnh viện gửi đã được xác nhận sẵn và chờ công ty bảo hiểm duyệt.</p>
       <button className="hospital-btn" onClick={load} disabled={loading}>Tải lại danh sách</button>
       {loading && <p>Đang tải...</p>}
       {!loading && claims.length === 0 && <p>Không có yêu cầu nào đang chờ xác nhận.</p>}
