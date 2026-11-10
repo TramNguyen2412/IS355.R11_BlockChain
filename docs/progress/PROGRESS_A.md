@@ -13,32 +13,30 @@ Cập nhật lần cuối: 10/11/2026
 - [x] A08 — Script nạp dữ liệu mẫu seed.js, bảng gas và bàn giao H3. Báo cáo: docs/plan/A/reports/REPORT_A08.md
 - [x] A09 — Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (KeySetup.jsx, VerifyCard.jsx, hospital.css, HospitalPage.jsx; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A09.md
 - [x] A10 — Thử deploy Sepolia sớm: deploy thành công, cấp quyền bệnh viện, nạp quỹ 0.02 ETH, verify mã nguồn Etherscan có tích xanh, hoàn nguyên address.json local. Báo cáo: docs/plan/A/reports/REPORT_A10.md
+- [x] A11 — Màn hình Bệnh viện phần 2: Form gửi yêu cầu bồi thường (SubmitClaimForm.jsx, HospitalPage.jsx, mã hóa phong bì AES+RSA 3 bên, tải IPFS, submitClaim; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A11.md
 
 ## Bước tiếp theo
-- Chặng A11: Màn hình Bệnh viện, phần 2: Form gửi yêu cầu bồi thường (`docs/plan/A/A11_bv_gui_claim.md`).
+- Chặng A12: Màn hình Bệnh viện, phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (`docs/plan/A/A12_bv_xac_nhan_va_ghep.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A10 đã hoàn thành (Sepolia deploy thử nghiệm và verify thành công 100%).
-- Bước tiếp theo: Chặng A11.
+- Task hiện tại: A11 đã hoàn thành (form gửi claim tích hợp IPFS và mã hóa 3 bên hoàn chỉnh).
+- Bước tiếp theo: Chặng A12.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `docs/plan/A/reports/REPORT_A10.md` — tạo mới
+- `frontend/src/pages/hospital/SubmitClaimForm.jsx` — tạo mới
+- `frontend/src/pages/hospital/HospitalPage.jsx` — sửa
+- `docs/plan/A/reports/REPORT_A11.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
-- `docs/plan/A/A10_thu_sepolia.md` — sửa
-- `docs/plan/A/A13_deploy_sepolia_chinh_thuc.md` — sửa
-- `docs/plan/00_MASTER_PLAN.md` — sửa
-- `docs/plan/03_CHECKLIST_RUBRIC_DEMO_VA_BAO_VE.md` — sửa
-- `docs/plan/A/A00_chuan_bi_va_cach_dung.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Địa chỉ thử Sepolia (A10): `0xde146e3380Fb7Ae5ce7bB83e8ccd3e7c2f479A0a` (block 12102381), quỹ thử 0.02 ETH.
-- Thống nhất cập nhật quỹ Sepolia bản chính thức (A13) thành 0.03 ETH (ví Admin mục tiêu ≥ 0.08 ETH). Đã hoàn nguyên `address.json` về localhost.
+- Quy trình gửi claim luôn chạy `dryRun: true` trước khi tải hóa đơn lên IPFS và mã hóa hồ sơ bệnh án.
+- Hồ sơ bệnh án mã hóa tuân thủ cấu trúc phong bì lai với 3 người nhận (Bệnh nhân, Bệnh viện, Bảo hiểm) với địa chỉ chữ thường.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- Nhắn B và C: Khi deploy chính thức mốc H6 (A13), quỹ ban đầu sẽ nạp 0.03 ETH (thay vì 0.1 ETH do faucet hạn chế), các bạn có thể nạp thêm bằng `fundPool` khi cần duyệt nhiều claim.
+- Không có.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Xem contract đã verify trên Etherscan Sepolia: `https://sepolia.etherscan.io/address/0xde146e3380Fb7Ae5ce7bB83e8ccd3e7c2f479A0a#code` (đã có dấu tích xanh Verified).
+- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~3.3s, bundle SubmitClaimForm tích hợp mượt mà không lỗi.
