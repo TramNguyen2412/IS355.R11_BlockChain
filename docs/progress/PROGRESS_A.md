@@ -15,30 +15,31 @@ Cập nhật lần cuối: 10/11/2026
 - [x] A10 — Thử deploy Sepolia sớm: deploy thành công, cấp quyền bệnh viện, nạp quỹ 0.02 ETH, verify mã nguồn Etherscan có tích xanh, hoàn nguyên address.json local. Báo cáo: docs/plan/A/reports/REPORT_A10.md
 - [x] A11 — Màn hình Bệnh viện phần 2: Form gửi yêu cầu bồi thường (SubmitClaimForm.jsx, HospitalPage.jsx, mã hóa phong bì AES+RSA 3 bên, tải IPFS, submitClaim; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A11.md
 - [x] A12 — Màn hình Bệnh viện phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (PendingConfirmList.jsx, HospitalPage.jsx, hospital.css; build Vite pass, hoàn thiện trọn vẹn màn hình Bệnh viện). Báo cáo: docs/plan/A/reports/REPORT_A12.md
+- [x] A13 — Deploy Sepolia CHÍNH THỨC (mốc H6): deploy contract 0x9B5868254c31818320d2DDCBb5B28f15af265b62 (block 12103715), cấp quyền bệnh viện, nạp quỹ 0.03 ETH, verify Etherscan có tích xanh, cập nhật address.json chainId 11155111. Báo cáo: docs/plan/A/reports/REPORT_A13.md
 
 ## Bước tiếp theo
-- Chặng A13: Deploy Sepolia CHÍNH THỨC (mốc H6) (`docs/plan/A/A13_deploy_sepolia_chinh_thuc.md`) hoặc Chặng A14: Bảng test case, bảng gas và minh chứng (`docs/plan/A/A14_minh_chung_va_bao_cao.md`).
+- Chặng A14: Bảng test case, bảng gas và minh chứng hoàn thiện (`docs/plan/A/A14_minh_chung_va_bao_cao.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A12 đã hoàn thành (Màn hình Bệnh viện hoàn chỉnh 4/4 khối, sẵn sàng mốc H5).
-- Bước tiếp theo: Chặng A13 hoặc A14.
+- Task hiện tại: A13 đã hoàn thành (Deploy Sepolia chính thức, bàn giao mốc H6).
+- Bước tiếp theo: Chặng A14.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `frontend/src/pages/hospital/PendingConfirmList.jsx` — tạo mới
-- `frontend/src/pages/hospital/HospitalPage.jsx` — sửa
-- `frontend/src/pages/hospital/hospital.css` — sửa
-- `docs/plan/A/reports/REPORT_A12.md` — tạo mới
+- `frontend/src/contracts/address.json` — cập nhật địa chỉ Sepolia chính thức và chainId 11155111
+- `docs/plan/A/reports/REPORT_A13.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Màn hình Bệnh viện hoàn thành toàn bộ 4 khối nghiệp vụ: Khóa RSA, Kiểm tra thẻ NFT, Form gửi bồi thường, Xác nhận chi phí.
-- Lọc đúng claim PENDING và chưa xác nhận bởi bệnh viện, kiểm tra số tiền xác nhận không vượt số tiền yêu cầu.
+- Contract chính thức đã deploy tại `0x9B5868254c31818320d2DDCBb5B28f15af265b62`, deployBlock `12103715`.
+- Đóng băng toàn bộ code Smart Contract (HealthInsuranceNFT.sol) từ hôm nay (10/11/2026), không sửa đổi hay deploy lại để đảm bảo tính ổn định cho cả nhóm.
+- Quỹ ban đầu nạp 0.03 ETH, Bệnh viện `0xb381e33456e08F79cdeA9722506dabbdF2933F12` đã được cấp quyền.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- Không có.
+- Báo mốc H6 cho Phương Anh (B) và Lan Anh (C) chuyển sang mạng Sepolia và cấu hình `.env` (`VITE_USE_MOCK=false`, `VITE_CHAIN_ID=11155111`).
+- Nhờ Phương Anh (B) hoặc Lan Anh (C) duyệt và merge PR nhánh `tram` vào `main`.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~3.5s, bundle HospitalPage gồm đủ 4 khối không lỗi.
+- Kiểm tra trạng thái contract trên Sepolia: Etherscan https://sepolia.etherscan.io/address/0x9B5868254c31818320d2DDCBb5B28f15af265b62#code (tích xanh ✅, pool 0.03 ETH, bệnh viện đã cấp quyền).
