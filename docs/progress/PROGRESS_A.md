@@ -16,30 +16,35 @@ Cập nhật lần cuối: 10/11/2026
 - [x] A11 — Màn hình Bệnh viện phần 2: Form gửi yêu cầu bồi thường (SubmitClaimForm.jsx, HospitalPage.jsx, mã hóa phong bì AES+RSA 3 bên, tải IPFS, submitClaim; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A11.md
 - [x] A12 — Màn hình Bệnh viện phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (PendingConfirmList.jsx, HospitalPage.jsx, hospital.css; build Vite pass, hoàn thiện trọn vẹn màn hình Bệnh viện). Báo cáo: docs/plan/A/reports/REPORT_A12.md
 - [x] A13 — Deploy Sepolia CHÍNH THỨC (mốc H6): deploy contract 0x9B5868254c31818320d2DDCBb5B28f15af265b62 (block 12103715), cấp quyền bệnh viện, nạp quỹ 0.03 ETH, verify Etherscan có tích xanh, cập nhật address.json chainId 11155111. Báo cáo: docs/plan/A/reports/REPORT_A13.md
+- [x] A14 — Minh chứng, bảng gas, bảng test case và báo cáo kỹ thuật hoàn thiện: xuất bảng đo gas thực nghiệm (hardhat-gas-reporter), bảng 34 ca kiểm thử chi tiết (100% passing), thuyết minh 2 ràng buộc logic, danh sách minh chứng và báo cáo kỹ thuật hoàn chỉnh tại docs/report/TongHopTrienKhai_A.md. Báo cáo tổng hợp: docs/report/TongHopTrienKhai_A.md
 
 ## Bước tiếp theo
-- Chặng A14: Bảng test case, bảng gas và minh chứng hoàn thiện (`docs/plan/A/A14_minh_chung_va_bao_cao.md`).
+- A hoàn tất toàn bộ nhiệm vụ lập trình và báo cáo chuyên trách; sẵn sàng hỗ trợ nhóm ghép slide, báo cáo tổng và quay video demo liên luồng (SUB-1 04/12, SUB-2 08/12).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A13 đã hoàn thành (Deploy Sepolia chính thức, bàn giao mốc H6).
-- Bước tiếp theo: Chặng A14.
+- Task hiện tại: A14 đã hoàn thành. Toàn bộ phần việc của Thành viên A (Trâm) đã hoàn tất trọn vẹn.
+- Trạng thái: Sẵn sàng demo và nghiệm thu.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `frontend/src/contracts/address.json` — cập nhật địa chỉ Sepolia chính thức và chainId 11155111
-- `docs/plan/A/reports/REPORT_A13.md` — tạo mới
+- `docs/report/BangGas_A.md` — tạo mới
+- `docs/report/BangTestCase_A.md` — tạo mới
+- `docs/report/Muc4_2_RangBuoc_A.md` — tạo mới
+- `docs/report/DanhSachMinhChung_A.md` — tạo mới
+- `docs/report/TongHopTrienKhai_A.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Contract chính thức đã deploy tại `0x9B5868254c31818320d2DDCBb5B28f15af265b62`, deployBlock `12103715`.
-- Đóng băng toàn bộ code Smart Contract (HealthInsuranceNFT.sol) từ hôm nay (10/11/2026), không sửa đổi hay deploy lại để đảm bảo tính ổn định cho cả nhóm.
-- Quỹ ban đầu nạp 0.03 ETH, Bệnh viện `0xb381e33456e08F79cdeA9722506dabbdF2933F12` đã được cấp quyền.
+- Hoàn thành đầy đủ bộ tài liệu kỹ thuật minh chứng phục vụ chấm điểm đồ án IS355 trong thư mục `docs/report/`.
+- Hợp đồng `HealthInsuranceNFT` đóng băng vĩnh viễn trên Sepolia tại `0x9B5868254c31818320d2DDCBb5B28f15af265b62`.
+- Giao diện Bệnh viện (`/hospital`) hoàn chỉnh 4/4 khối chức năng, build Vite sạch lỗi.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- Báo mốc H6 cho Phương Anh (B) và Lan Anh (C) chuyển sang mạng Sepolia và cấu hình `.env` (`VITE_USE_MOCK=false`, `VITE_CHAIN_ID=11155111`).
-- Nhờ Phương Anh (B) hoặc Lan Anh (C) duyệt và merge PR nhánh `tram` vào `main`.
+- B và C tiếp tục hoàn thiện giao diện Quản trị viên và Bệnh nhân theo tiến độ để chuẩn bị ghép luồng demo chung.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Kiểm tra trạng thái contract trên Sepolia: Etherscan https://sepolia.etherscan.io/address/0x9B5868254c31818320d2DDCBb5B28f15af265b62#code (tích xanh ✅, pool 0.03 ETH, bệnh viện đã cấp quyền).
+- Chạy kiểm thử: `cmd /c "cd contracts-hardhat && npx hardhat test"` (34 passing).
+- Kiểm tra hợp đồng on-chain: Etherscan https://sepolia.etherscan.io/address/0x9B5868254c31818320d2DDCBb5B28f15af265b62#code.
+- Đọc tài liệu báo cáo: `docs/report/TongHopTrienKhai_A.md`.
