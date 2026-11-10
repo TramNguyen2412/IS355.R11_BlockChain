@@ -14,23 +14,25 @@ Cập nhật lần cuối: 10/11/2026
 - [x] A09 — Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (KeySetup.jsx, VerifyCard.jsx, hospital.css, HospitalPage.jsx; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A09.md
 - [x] A10 — Thử deploy Sepolia sớm: deploy thành công, cấp quyền bệnh viện, nạp quỹ 0.02 ETH, verify mã nguồn Etherscan có tích xanh, hoàn nguyên address.json local. Báo cáo: docs/plan/A/reports/REPORT_A10.md
 - [x] A11 — Màn hình Bệnh viện phần 2: Form gửi yêu cầu bồi thường (SubmitClaimForm.jsx, HospitalPage.jsx, mã hóa phong bì AES+RSA 3 bên, tải IPFS, submitClaim; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A11.md
+- [x] A12 — Màn hình Bệnh viện phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (PendingConfirmList.jsx, HospitalPage.jsx, hospital.css; build Vite pass, hoàn thiện trọn vẹn màn hình Bệnh viện). Báo cáo: docs/plan/A/reports/REPORT_A12.md
 
 ## Bước tiếp theo
-- Chặng A12: Màn hình Bệnh viện, phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (`docs/plan/A/A12_bv_xac_nhan_va_ghep.md`).
+- Chặng A13: Deploy Sepolia CHÍNH THỨC (mốc H6) (`docs/plan/A/A13_deploy_sepolia_chinh_thuc.md`) hoặc Chặng A14: Bảng test case, bảng gas và minh chứng (`docs/plan/A/A14_minh_chung_va_bao_cao.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A11 đã hoàn thành (form gửi claim tích hợp IPFS và mã hóa 3 bên hoàn chỉnh).
-- Bước tiếp theo: Chặng A12.
+- Task hiện tại: A12 đã hoàn thành (Màn hình Bệnh viện hoàn chỉnh 4/4 khối, sẵn sàng mốc H5).
+- Bước tiếp theo: Chặng A13 hoặc A14.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `frontend/src/pages/hospital/SubmitClaimForm.jsx` — tạo mới
+- `frontend/src/pages/hospital/PendingConfirmList.jsx` — tạo mới
 - `frontend/src/pages/hospital/HospitalPage.jsx` — sửa
-- `docs/plan/A/reports/REPORT_A11.md` — tạo mới
+- `frontend/src/pages/hospital/hospital.css` — sửa
+- `docs/plan/A/reports/REPORT_A12.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Quy trình gửi claim luôn chạy `dryRun: true` trước khi tải hóa đơn lên IPFS và mã hóa hồ sơ bệnh án.
-- Hồ sơ bệnh án mã hóa tuân thủ cấu trúc phong bì lai với 3 người nhận (Bệnh nhân, Bệnh viện, Bảo hiểm) với địa chỉ chữ thường.
+- Màn hình Bệnh viện hoàn thành toàn bộ 4 khối nghiệp vụ: Khóa RSA, Kiểm tra thẻ NFT, Form gửi bồi thường, Xác nhận chi phí.
+- Lọc đúng claim PENDING và chưa xác nhận bởi bệnh viện, kiểm tra số tiền xác nhận không vượt số tiền yêu cầu.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
@@ -39,4 +41,4 @@ Cập nhật lần cuối: 10/11/2026
 - Không có.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~3.3s, bundle SubmitClaimForm tích hợp mượt mà không lỗi.
+- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~3.5s, bundle HospitalPage gồm đủ 4 khối không lỗi.

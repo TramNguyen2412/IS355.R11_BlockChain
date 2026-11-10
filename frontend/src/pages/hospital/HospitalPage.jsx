@@ -2,6 +2,7 @@ import { useState } from "react";
 import KeySetup from "./KeySetup.jsx";
 import VerifyCard from "./VerifyCard.jsx";
 import SubmitClaimForm from "./SubmitClaimForm.jsx";
+import PendingConfirmList from "./PendingConfirmList.jsx";
 import "./hospital.css";
 
 export default function HospitalPage() {
@@ -16,6 +17,7 @@ export default function HospitalPage() {
       ) : (
         <p className="hospital-warn">Hãy kiểm tra thẻ bảo hiểm hợp lệ trước khi gửi yêu cầu bồi thường.</p>
       )}
+      <PendingConfirmList />
     </div>
   );
 }
