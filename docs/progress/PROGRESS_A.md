@@ -1,5 +1,5 @@
 # PROGRESS — Thành viên A (Trâm)
-Cập nhật lần cuối: 09/11/2026
+Cập nhật lần cuối: 10/11/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `tram`
@@ -12,31 +12,33 @@ Cập nhật lần cuối: 09/11/2026
 - [x] A07 — Nghiệp vụ 4: Duyệt và chi trả tự động (approveClaim, rejectClaim, ràng buộc logic số 2, chống reentrancy + 34 test passing). Báo cáo: docs/plan/A/reports/REPORT_A07.md
 - [x] A08 — Script nạp dữ liệu mẫu seed.js, bảng gas và bàn giao H3. Báo cáo: docs/plan/A/reports/REPORT_A08.md
 - [x] A09 — Màn hình Bệnh viện phần 1: Thiết lập khóa RSA và kiểm tra thẻ NFT (KeySetup.jsx, VerifyCard.jsx, hospital.css, HospitalPage.jsx; build Vite pass). Báo cáo: docs/plan/A/reports/REPORT_A09.md
+- [x] A10 — Thử deploy Sepolia sớm: deploy thành công, cấp quyền bệnh viện, nạp quỹ 0.02 ETH, verify mã nguồn Etherscan có tích xanh, hoàn nguyên address.json local. Báo cáo: docs/plan/A/reports/REPORT_A10.md
 
 ## Bước tiếp theo
-- Chặng A10: Thử deploy Sepolia sớm (`docs/plan/A/A10_thu_sepolia.md`) hoặc Chặng A11: Form gửi yêu cầu bồi thường (`docs/plan/A/A11_bv_gui_claim.md`).
+- Chặng A11: Màn hình Bệnh viện, phần 2: Form gửi yêu cầu bồi thường (`docs/plan/A/A11_bv_gui_claim.md`).
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A09 đã hoàn thành (màn hình Bệnh viện khối 1 và 2 sẵn sàng).
-- Bước tiếp theo: Chặng A10 hoặc A11.
+- Task hiện tại: A10 đã hoàn thành (Sepolia deploy thử nghiệm và verify thành công 100%).
+- Bước tiếp theo: Chặng A11.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `frontend/src/pages/hospital/hospital.css` — tạo mới
-- `frontend/src/pages/hospital/KeySetup.jsx` — tạo mới
-- `frontend/src/pages/hospital/VerifyCard.jsx` — tạo mới
-- `frontend/src/pages/hospital/HospitalPage.jsx` — sửa
-- `docs/plan/A/reports/REPORT_A09.md` — tạo mới
+- `docs/plan/A/reports/REPORT_A10.md` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
+- `docs/plan/A/A10_thu_sepolia.md` — sửa
+- `docs/plan/A/A13_deploy_sepolia_chinh_thuc.md` — sửa
+- `docs/plan/00_MASTER_PLAN.md` — sửa
+- `docs/plan/03_CHECKLIST_RUBRIC_DEMO_VA_BAO_VE.md` — sửa
+- `docs/plan/A/A00_chuan_bi_va_cach_dung.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Component `KeySetup.jsx` và `VerifyCard.jsx` dùng CSS riêng biệt trong `hospital.css`, không sửa `global.css`.
-- Đảm bảo kiểm tra phân quyền `isHospital` và `dryRun` trước mọi thao tác on-chain.
+- Địa chỉ thử Sepolia (A10): `0xde146e3380Fb7Ae5ce7bB83e8ccd3e7c2f479A0a` (block 12102381), quỹ thử 0.02 ETH.
+- Thống nhất cập nhật quỹ Sepolia bản chính thức (A13) thành 0.03 ETH (ví Admin mục tiêu ≥ 0.08 ETH). Đã hoàn nguyên `address.json` về localhost.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- [ ] Gửi Lan Anh (C): Bổ sung lại switch `useMock` trong `frontend/src/app/contractService.js` để khi `VITE_USE_MOCK=true` ứng dụng chuyển tiếp sang `contractService.mock.js` mà không đòi hỏi kết nối MetaMask.
+- Nhắn B và C: Khi deploy chính thức mốc H6 (A13), quỹ ban đầu sẽ nạp 0.03 ETH (thay vì 0.1 ETH do faucet hạn chế), các bạn có thể nạp thêm bằng `fundPool` khi cần duyệt nhiều claim.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Lệnh: `cd frontend && npm run build`  Kết quả: Vite build thành công trong ~2.3s, không có lỗi module.
+- Xem contract đã verify trên Etherscan Sepolia: `https://sepolia.etherscan.io/address/0xde146e3380Fb7Ae5ce7bB83e8ccd3e7c2f479A0a#code` (đã có dấu tích xanh Verified).

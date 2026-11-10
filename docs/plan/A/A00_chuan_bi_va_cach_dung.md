@@ -88,7 +88,7 @@ git branch --show-current            # phải in: tram
 GitHub → Settings → Branches → **Add branch protection rule** → Branch name `main` → tick **Require a pull request before merging** (số người duyệt: 1). **Đừng** tick "Require review from Code Owners" (dễ làm kẹt PR của chính chủ). Lưu.
 
 ### 1.10 Việc còn lại của M0-ALL
-- Tạo ví MetaMask **ADMIN** và **OUTSIDER** (ví thử nghiệm, **không chứa tiền thật**), xin ETH Sepolia từ faucet (ADMIN ~0.3 ETH). Khóa riêng **không** dán vào repo hay chat với AI.
+- Tạo ví MetaMask **ADMIN** và **OUTSIDER** (ví thử nghiệm, **không chứa tiền thật**), xin ETH Sepolia từ faucet (ADMIN xin dần, mục tiêu ≥ 0.1 ETH). Khóa riêng **không** dán vào repo hay chat với AI.
 - Nhập 4 ví chung theo master plan M0-ALL.
 
 ### 1.11 Cập nhật PROGRESS_A

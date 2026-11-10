@@ -21,14 +21,14 @@ File 00 mục 1 (R5), 4.3, 5, 6.1, 8.1 · `RULES_A.md` · `PROGRESS_A.md`.
 ## 3. Chuẩn bị (Trâm làm, một lần)
 1. **RPC Sepolia:** đăng ký tài khoản miễn phí ở một nhà cung cấp RPC (ví dụ Alchemy hoặc Infura), tạo ứng dụng mạng **Sepolia**, lấy URL dạng `https://...`.
 2. **Etherscan API key:** tạo tài khoản Etherscan, tạo API key miễn phí.
-3. **Ví Admin thử nghiệm** (đã tạo ở M0-ALL, chỉ chứa ETH testnet): xuất khóa riêng từ MetaMask (Account details → Show private key). Cần **≥ 0.15 ETH Sepolia**.
+3. **Ví Admin thử nghiệm** (đã tạo ở M0-ALL, chỉ chứa ETH testnet): xuất khóa riêng từ MetaMask (Account details → Show private key). Cần **≥ 0.05 ETH**.
 4. Điền `contracts-hardhat/.env` (mở bằng trình soạn thảo, **không dán nội dung vào chat**):
 ```text
 SEPOLIA_RPC_URL=https://...
 DEPLOYER_PRIVATE_KEY=0x...(64 ký tự hex, có tiền tố 0x)
 ETHERSCAN_API_KEY=...
 HOSPITAL_ADDRESS=0x...(địa chỉ ví Bệnh viện Sepolia, địa chỉ công khai)
-POOL_FUND_ETH=0.05
+POOL_FUND_ETH=0.02
 ```
 5. Kiểm tra đã điền đủ mà **không lộ giá trị** (lệnh chỉ in `set`/`EMPTY`):
 ```bash
@@ -50,7 +50,7 @@ npx hardhat run scripts/deploy.js --network sepolia
 ```bash
 npx hardhat run scripts/seed.js --network sepolia
 ```
-→ `Da cap quyen benh vien: 0x...` và `Quy hien tai: 0.05 ETH`.
+→ `Da cap quyen benh vien: 0x...` và `Quy hien tai: 0.02 ETH`.
 
 **Bước 4 — Verify mã nguồn lên Etherscan** (contract **không có tham số constructor**):
 ```bash
@@ -67,7 +67,7 @@ git status --short   # KHÔNG được thấy hai file này và KHÔNG thấy .e
 ```
 
 **Bước 7 — A-16 (CN 08/11), chuẩn bị deploy chính thức:**
-- Ví Admin còn **≥ 0.15 ETH Sepolia** (deploy ~0.01–0.03; nạp quỹ 0.1). Thiếu thì xin thêm faucet (có thể mất vài ngày chờ, nên làm sớm).
+- Ví Admin còn đủ gas deploy + quỹ 0.03, nên có thêm để B tạo gói. Thiếu thì xin thêm faucet (có thể mất vài ngày chờ, nên làm sớm).
 - Điền cột "Địa chỉ Sepolia" file 00 mục 6.1 qua quy trình mục 8.1: mỗi người nhắn địa chỉ ví công khai của mình trong chat; Trâm gửi yêu cầu đổi theo mẫu:
 ```text
 [YÊU CẦU ĐỔI] A → cả nhóm
@@ -77,7 +77,7 @@ Lý do: sắp deploy Sepolia chính thức ngày 09/11
 Ảnh hưởng tới: seed.js, test tích hợp, tài liệu
 ```
 Sau khi cả ba đồng ý, **C (Lan Anh)** sửa file 00 (không phải A).
-- Đặt `HOSPITAL_ADDRESS` trong `.env` = địa chỉ ví Bệnh viện Sepolia; `POOL_FUND_ETH=0.1` cho bản chính thức.
+- Đặt `HOSPITAL_ADDRESS` trong `.env` = địa chỉ ví Bệnh viện Sepolia; `POOL_FUND_ETH=0.03` cho bản chính thức.
 
 ## 5. Lỗi hay gặp
 | Lỗi | Nguyên nhân | Xử lý |

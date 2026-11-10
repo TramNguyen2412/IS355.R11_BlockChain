@@ -5,7 +5,7 @@
 > **Git:** làm trên nhánh cố định **`tram`**. Trước khi bắt đầu: `git checkout tram && git pull origin main`, rồi kiểm tra `git branch --show-current` phải in ra **`tram`** (sai thì dừng, không làm tiếp). Khi ĐẠT: commit → `git pull origin main` (không conflict) → `git push origin tram` → Pull Request từ `tram` vào `main`. Sau khi PR merge: `git checkout tram && git pull origin main`.
 
 ## 0. Chặng này làm gì (lời thường)
-Deploy contract **bản cuối** lên Sepolia, nạp quỹ 0.1 ETH, cấp quyền bệnh viện, verify mã nguồn trên Etherscan, rồi **commit đúng hai file** `abi.json` và `address.json` để B (Phương Anh) và C (Lan Anh) chuyển sang chạy Sepolia thật. Đây là mốc **H6**. **Sau 12/11 không sửa contract** (sửa = deploy lại = đổi địa chỉ = cả nhóm sửa theo). Như A10: **Trâm gõ mọi lệnh có khóa**, AI chỉ hướng dẫn và viết báo cáo.
+Deploy contract **bản cuối** lên Sepolia, nạp quỹ 0.03 ETH, cấp quyền bệnh viện, verify mã nguồn trên Etherscan, rồi **commit đúng hai file** `abi.json` và `address.json` để B (Phương Anh) và C (Lan Anh) chuyển sang chạy Sepolia thật. Đây là mốc **H6**. **Sau 12/11 không sửa contract** (sửa = deploy lại = đổi địa chỉ = cả nhóm sửa theo). Như A10: **Trâm gõ mọi lệnh có khóa**, AI chỉ hướng dẫn và viết báo cáo.
 
 ## 1. Nạp ngữ cảnh
 File 00 mục 1 (R5), 4.3, 5, 6.1, 8.1 · `RULES_A.md` · `PROGRESS_A.md` · `REPORT_A10.md` (các lỗi đã gặp ở bản thử).
@@ -24,18 +24,18 @@ git status --short          # phải rỗng
 cd contracts-hardhat
 npx hardhat compile --force && npx hardhat test
 ```
-→ **34 passing**. Kiểm tra `.env` bằng lệnh chỉ in `set`/`EMPTY` như A10 mục 3 bước 5 (cả 5 dòng `set`), với `HOSPITAL_ADDRESS` = ví Bệnh viện đã chốt ở file 00 mục 6.1 và **`POOL_FUND_ETH=0.1`**.
-Kiểm tra số dư ví Admin ≥ 0.15 ETH:
+→ **34 passing**. Kiểm tra `.env` bằng lệnh chỉ in `set`/`EMPTY` như A10 mục 3 bước 5 (cả 5 dòng `set`), với `HOSPITAL_ADDRESS` = ví Bệnh viện đã chốt ở file 00 mục 6.1 và **`POOL_FUND_ETH=0.03`**.
+Kiểm tra số dư ví Admin khoảng 0.08 ETH:
 ```bash
 npx hardhat console --network sepolia
 > (await ethers.provider.getBalance((await ethers.getSigners())[0].address)).toString()
 ```
-→ số lớn hơn `150000000000000000`. Gõ `.exit` để thoát.
+→ số lớn hơn `80000000000000000`. Gõ `.exit` để thoát.
 
 ## 4. Các bước (Trâm chạy)
 **Bước 1 — Deploy:** `npx hardhat run scripts/deploy.js --network sepolia`. Chép **địa chỉ contract** và **deploy block**.
 
-**Bước 2 — Seed:** `npx hardhat run scripts/seed.js --network sepolia` → in `Da cap quyen benh vien: 0x...` và `Quy hien tai: 0.1 ETH`. (Gói bảo hiểm **không** tạo ở bước này: Admin tạo qua Console của B (Phương Anh), đúng bảng file 00 mục 6.2.)
+**Bước 2 — Seed:** `npx hardhat run scripts/seed.js --network sepolia` → in `Da cap quyen benh vien: 0x...` và `Quy hien tai: 0.03 ETH`. (Gói bảo hiểm **không** tạo ở bước này: Admin tạo qua Console của B (Phương Anh), đúng bảng file 00 mục 6.2.)
 
 **Bước 3 — Verify:** `npx hardhat verify --network sepolia <ĐỊA_CHỈ>` → `Successfully verified`. Chụp ảnh trang Contract trên Etherscan có dấu ✅ (minh chứng Tiêu chí 1).
 
@@ -44,7 +44,7 @@ npx hardhat console --network sepolia
 |---|---|
 | `totalPlans()` | `0` |
 | `hasRole(HOSPITAL_ROLE, <ví Bệnh viện>)` (`HOSPITAL_ROLE` = `keccak256("HOSPITAL_ROLE")`) | `true` |
-| `poolBalance()` | `100000000000000000` (0.1 ETH) |
+| `poolBalance()` | `30000000000000000` (0.03 ETH) |
 | `insurer()` | địa chỉ ví Admin |
 
 **Bước 5 — Commit hai file sinh tự động:**
@@ -66,7 +66,7 @@ Mở Pull Request, nhờ B (Phương Anh) hoặc C (Lan Anh) xem rồi merge và
 ```text
 [H6] Deploy Sepolia xong.
 Contract: 0x...   Deploy block: ...   Etherscan: https://sepolia.etherscan.io/address/0x...
-Pool: 0.1 ETH. Bệnh viện đã được cấp quyền. CHƯA có gói nào: Admin tạo 2 gói qua Console (file 00 mục 6.2).
+Pool: 0.03 ETH (nạp thêm qua fundPool khi cần). Bệnh viện đã được cấp quyền. CHƯA có gói nào: Admin tạo 2 gói qua Console (file 00 mục 6.2).
 B, C: git pull main, đặt VITE_USE_MOCK=false và VITE_CHAIN_ID=11155111.
 Từ giờ KHÔNG đổi contract (đóng băng 12/11).
 ```
@@ -94,7 +94,7 @@ Output deploy, seed, verify (che URL RPC có khóa); link Etherscan; ảnh dấu
 ## 8. Gửi mình kiểm
 Báo cáo (không bao giờ gửi khóa riêng hoặc URL RPC đầy đủ).
 
-**Mình sẽ soi:** `chainId` 11155111; commit chỉ có hai file; verify ✅; pool 0.1; không tạo gói ở seed; đã báo H6; tag.
+**Mình sẽ soi:** `chainId` 11155111; commit chỉ có hai file; verify ✅; pool 0.03; không tạo gói ở seed; đã báo H6; tag.
 
 ## 9. Prompt dán cho AI (chế độ chỉ-hướng-dẫn)
 ```text
