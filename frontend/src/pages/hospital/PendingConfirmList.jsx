@@ -49,8 +49,8 @@ export default function PendingConfirmList() {
     if (value > claim.amount) { setError("Số tiền xác nhận không được lớn hơn số tiền yêu cầu."); return; }
     setBusyId(key);
     try {
-      await contractService.confirmClaim(claim.claimId, value, { dryRun: true });
-      const tx = await contractService.confirmClaim(claim.claimId, value);
+      await contractService.confirmClaim(claim.claimId, value, { dryRun: true, from: address });
+      const tx = await contractService.confirmClaim(claim.claimId, value, { from: address });
       setInfo(`✅ Đã xác nhận yêu cầu #${key}. Mã giao dịch: ${tx.hash}`);
       await load();
     } catch (e) {
