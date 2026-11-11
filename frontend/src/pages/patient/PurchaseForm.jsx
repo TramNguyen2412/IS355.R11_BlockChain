@@ -3,6 +3,7 @@ import { useWallet } from '../../app/WalletProvider';
 import {
   getEncryptionKey,
   getInsurerAddress,
+  getPolicyOf,
   purchasePolicy,
 } from '../../app/contractService';
 import { cryptoService } from '../../services/index.js';
@@ -80,20 +81,31 @@ function PurchaseForm({ plans = [], onPurchased }) {
         selectedPlan.id,
         encryptedHealthId,
         selectedPlan.price,
-        { dryRun: true },
+        { dryRun: true, from: address },
       );
 
       const result = await purchasePolicy(
         selectedPlan.id,
         encryptedHealthId,
         selectedPlan.price,
+        { from: address }
       );
+
+      const purchasedPolicy = await getPolicyOf(address);
 
       setTx({
         status: 'success',
         hash: result.hash,
-        message: 'Mua gói bảo hiểm thành công.',
+        message: purchasedPolicy?.tokenId != null
+          ? `Mua gói bảo hiểm thành công. Token ID: ${purchasedPolicy.tokenId}`
+          : 'Mua gói bảo hiểm thành công nhưng chưa lấy được Token ID.',
       });
+
+      /*setTx({
+        status: 'success',
+        hash: result.hash,
+        message: 'Mua gói bảo hiểm thành công.',
+      });*/
 
       setHealthId('');
 

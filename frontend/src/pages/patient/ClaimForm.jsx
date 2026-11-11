@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { parseEther } from 'ethers';
+import { formatEther, parseEther } from 'ethers';
 import { useWallet } from '../../app/WalletProvider';
 import {
   getEncryptionKey,
@@ -182,8 +182,8 @@ function ClaimForm({ policy, onSubmitted }) {
         recordCID: recordResult.cid,
       };
 
-      await submitClaim(claimInput, { dryRun: true });
-      const result = await submitClaim(claimInput);
+      await submitClaim(claimInput, { dryRun: true, from: address });
+      const result = await submitClaim(claimInput, { from: address });
 
       setTx({
         status: 'success',
@@ -227,8 +227,9 @@ function ClaimForm({ policy, onSubmitted }) {
 
           <p>
             <strong>Hạn mức còn lại:</strong>{' '}
-            {Number(policy.remainingLimit) >= 0
-              ? `${policy.remainingLimit.toString()} wei`
+            {typeof policy.remainingLimit === 'bigint' &&
+            policy.remainingLimit >= 0n
+              ? `${formatEther(policy.remainingLimit)} ETH`
               : 'Không xác định'}
           </p>
 

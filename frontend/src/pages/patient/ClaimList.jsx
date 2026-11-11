@@ -82,6 +82,16 @@ function ClaimList({ claims = [] }) {
               <strong>Record CID:</strong>{' '}
               <code>{claim.recordCID}</code>
             </p>
+
+            <p>
+              <strong>Hash giao dịch (mock):</strong>{' '}
+              {claim.txHash ? (
+                <code>{claim.txHash}</code>
+              ) : (
+                <span>Chưa có hash trong dữ liệu hiện tại.</span>
+              )}
+            </p>
+
           </article>
         );
       })}

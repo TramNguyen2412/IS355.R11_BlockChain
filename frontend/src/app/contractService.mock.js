@@ -24,12 +24,30 @@ const claimsSeed = () => [
   { claimId: 3, tokenId: 1, patient: PATIENT, hospital: ZeroAddress, amount: 3000000000000000n, confirmedAmount: 0n, hospitalConfirmed: false, billCID: 'mock-cid-bill-01', recordCID: 'mock-cid-record-02', status: 2, createdAt: 1893715200, resolvedAt: 1893718800, reason: 'Mock claim rejected' },
 ];
 let plans, policies, activePolicies, claims, pool, keys, hospitals, events, block, nextPlan, nextPolicy, nextClaim, totalPremium, totalPaid;
+
 export function __resetMockStateForTests() {
-  plans = plansSeed(); policies = new Map([[1, policySeed()]]); activePolicies = new Map([[lower(PATIENT), 1]]); claims = claimsSeed();
+  plans = plansSeed();
+  policies = new Map();
+  activePolicies = new Map();
+  claims = [];
+
   pool = 100000000000000000n;
-  keys = new Map([[lower(ADMIN), 'MOCK_RSA_PUBLIC_KEY_PEM_INSURER'], [lower(HOSPITAL), 'MOCK_RSA_PUBLIC_KEY_PEM_HOSPITAL'], [lower(PATIENT), 'MOCK_RSA_PUBLIC_KEY_PEM_PATIENT']]);
-  hospitals = new Set([lower(HOSPITAL)]); events = []; block = 1; nextPlan = 3; nextPolicy = 2; nextClaim = 4;
-  totalPremium = 7000000000000000n; totalPaid = 12000000000000000n;
+
+  keys = new Map([
+    [lower(ADMIN), 'MOCK_RSA_PUBLIC_KEY_PEM_INSURER'],
+    [lower(HOSPITAL), 'MOCK_RSA_PUBLIC_KEY_PEM_HOSPITAL'],
+    [lower(PATIENT), 'MOCK_RSA_PUBLIC_KEY_PEM_PATIENT'],
+  ]);
+
+  hospitals = new Set([lower(HOSPITAL)]);
+  events = [];
+  block = 1;
+  nextPlan = 1;
+  nextPolicy = 1;
+  nextClaim = 1;
+
+  totalPremium = 0n;
+  totalPaid = 0n;
 }
 __resetMockStateForTests();
 const sender = (options) => options?.from ?? ADMIN;
@@ -51,7 +69,12 @@ export async function getRoles(address) { return { isInsurer: lower(address) ===
 export async function verifyInsurance(address) { const p = policyOf(address); if (!p) return { isValid: false, tokenId: 0, remainingLimit: 0n, expiryDate: 0 }; const plan = plans.find((x) => x.id === p.planId); return { isValid: Boolean(plan?.active) && timestamp() <= p.expiryDate, tokenId: p.tokenId, remainingLimit: p.coverageLimit - p.usedAmount, expiryDate: p.expiryDate }; }
 export async function getPlans() { return clone(plans); }
 export async function getPolicy(tokenId) { return policyView(getPolicyRaw(tokenId)); }
-export async function getPolicyOf(address) { return policyView(policyOf(address)); }
+export async function getPolicyOf(address) { const policy = policyView(policyOf(address));
+
+  console.log('[Mock] Địa chỉ truy vấn:', address);
+  console.log('[Mock] Hợp đồng hiện tại:', policy);
+
+  return policy;}
 export async function getClaim(claimId) { return claimView(findClaimRaw(claimId)); }
 export async function getClaimsByPatient(address) { return claims.filter((c) => lower(c.patient) === lower(address)).map(claimView); }
 export async function getAllClaims() { return claims.map(claimView); }
@@ -81,7 +104,34 @@ export async function submitClaim(input, options = {}) {
   const from = sender(options); const tokenId = Number(input?.tokenId); const amount = bi(input?.amount); if (!Number.isSafeInteger(tokenId) || tokenId < 1 || amount <= 0n) throw new Error('Số tiền không hợp lệ.');
   const p = getPolicyRaw(tokenId); const isOwner = lower(p.holder) === lower(from); const isHospital = hospitals.has(lower(from)); if (!isOwner && !isHospital) throw new Error('Chỉ chủ thẻ hoặc bệnh viện được ủy quyền mới gửi được yêu cầu.'); active(p); if (amount > p.coverageLimit - p.usedAmount) throw new Error('Số tiền vượt hạn mức bảo hiểm còn lại.');
   if (!String(input.billCID ?? '').startsWith('mock-') || !String(input.recordCID ?? '').startsWith('mock-')) throw new Error('CID hồ sơ không hợp lệ.'); if (options.dryRun) return tx('ClaimSubmitted', {}, true);
-  const c = { claimId: nextClaim++, tokenId, patient: p.holder, hospital: isHospital ? from : ZeroAddress, amount, confirmedAmount: isHospital ? amount : 0n, hospitalConfirmed: isHospital, billCID: input.billCID, recordCID: input.recordCID, status: 0, createdAt: timestamp(), resolvedAt: 0, reason: '' }; claims.push(c); return tx('ClaimSubmitted', { claimId: c.claimId, tokenId, patient: c.patient, submittedBy: from, amount });
+  const c = {
+    claimId: nextClaim++,
+    tokenId,
+    patient: p.holder,
+    hospital: isHospital ? from : ZeroAddress,
+    amount,
+    confirmedAmount: isHospital ? amount : 0n,
+    hospitalConfirmed: isHospital,
+    billCID: input.billCID,
+    recordCID: input.recordCID,
+    status: 0,
+    createdAt: timestamp(),
+    resolvedAt: 0,
+    reason: '',
+  };
+
+  claims.push(c);
+
+  const transaction = tx('ClaimSubmitted', {
+    claimId: c.claimId,
+    tokenId,
+    patient: c.patient,
+    submittedBy: from,
+    amount,
+  });
+
+  c.txHash = transaction.hash;
+  return transaction;
 }
 export async function confirmClaim(claimId, confirmedAmount, options = {}) { hospital(sender(options)); const c = findClaimRaw(claimId); pending(c); const amount = bi(confirmedAmount); if (amount <= 0n) throw new Error('Số tiền không hợp lệ.'); if (amount > c.amount) throw new Error('Số tiền xác nhận lớn hơn số tiền yêu cầu.'); const p = getPolicyRaw(c.tokenId); if (amount > p.coverageLimit - p.usedAmount) throw new Error('Số tiền vượt hạn mức bảo hiểm còn lại.'); if (options.dryRun) return tx('ClaimConfirmed', {}, true); c.hospital = sender(options); c.confirmedAmount = amount; c.hospitalConfirmed = true; return tx('ClaimConfirmed', { claimId: c.claimId, hospital: c.hospital, confirmedAmount: amount }); }
 export async function approveClaim(claimId, options = {}) { const c = findClaimRaw(claimId); pending(c); if (!c.hospitalConfirmed) throw new Error('Bệnh viện chưa xác nhận chi phí điều trị.'); const p = getPolicyRaw(c.tokenId); active(p); if (c.confirmedAmount > p.coverageLimit - p.usedAmount) throw new Error('Số tiền vượt hạn mức bảo hiểm còn lại.'); if (c.confirmedAmount > pool) throw new Error('Quỹ bảo hiểm hiện không đủ để chi trả.'); if (options.dryRun) return tx('ClaimApproved', {}, true); c.status = 1; c.resolvedAt = timestamp(); p.usedAmount += c.confirmedAmount; pool -= c.confirmedAmount; totalPaid += c.confirmedAmount; return tx('ClaimApproved', { claimId: c.claimId, patient: c.patient, amount: c.confirmedAmount }); }

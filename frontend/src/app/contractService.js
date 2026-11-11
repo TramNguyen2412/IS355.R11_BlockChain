@@ -4,6 +4,12 @@ import abi from '../contracts/abi.json';
 import addressConfig from '../contracts/address.json';
 import { toVietnameseError } from './errors.js';
 
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
+
+const mockService = USE_MOCK
+  ? await import('./contractService.mock.js')
+  : null;
+
 const CONTRACT_ADDRESS = addressConfig.HealthInsuranceNFT;
 const DEPLOY_BLOCK = Number(addressConfig.deployBlock ?? 0);
 const EXPECTED_CHAIN_ID = Number(
@@ -168,6 +174,8 @@ async function writeContract(method, args, options = {}, overrides = {}) {
 
 // Lấy quyền ADMIN và HOSPITAL của địa chỉ ví.
 export async function getRoles(address) {
+  if (USE_MOCK) return mockService.getRoles(address);
+
   return readContract(async (contract) => {
     const [isInsurer, hospitalRole] = await Promise.all([
       contract.hasRole(ZeroHash, address),
@@ -188,6 +196,8 @@ export async function getRoles(address) {
 
 // Kiểm tra trạng thái bảo hiểm của bệnh nhân.
 export async function verifyInsurance(address) {
+  if (USE_MOCK) return mockService.verifyInsurance(address);
+
   return readContract(async (contract) => {
     const result = await contract.verifyInsurance(address);
 
@@ -202,6 +212,8 @@ export async function verifyInsurance(address) {
 
 // Lấy danh sách tất cả gói bảo hiểm.
 export async function getPlans() {
+  if (USE_MOCK) return mockService.getPlans();
+
   return readContract(async (contract) => {
     const plans = await contract.getPlans();
     return plans.map(asPlan);
@@ -210,6 +222,8 @@ export async function getPlans() {
 
 // Lấy thông tin thẻ bảo hiểm theo tokenId.
 export async function getPolicy(tokenId) {
+  if (USE_MOCK) return mockService.getPolicy(tokenId);
+
   return readContract(async (contract) => {
     const policy = await contract.getPolicy(tokenId);
     return asPolicy(policy);
@@ -218,6 +232,8 @@ export async function getPolicy(tokenId) {
 
 // Lấy thẻ bảo hiểm đang hoạt động của bệnh nhân.
 export async function getPolicyOf(address) {
+  if (USE_MOCK) return mockService.getPolicyOf(address);
+
   return readContract(async (contract) => {
     const tokenId = await contract.activePolicyOf(address);
 
@@ -232,6 +248,8 @@ export async function getPolicyOf(address) {
 
 // Lấy thông tin yêu cầu bồi thường theo claimId.
 export async function getClaim(claimId) {
+  if (USE_MOCK) return mockService.getClaim(claimId);
+
   return readContract(async (contract) => {
     const claim = await contract.getClaim(claimId);
     return asClaim(claim);
@@ -240,6 +258,8 @@ export async function getClaim(claimId) {
 
 // Lấy danh sách yêu cầu bồi thường của bệnh nhân.
 export async function getClaimsByPatient(address) {
+  if (USE_MOCK) return mockService.getClaimsByPatient(address);
+  
   return readContract(async (contract) => {
     const claimIds = await contract.getClaimsByPatient(address);
 
@@ -253,6 +273,8 @@ export async function getClaimsByPatient(address) {
 
 // Lấy tất cả yêu cầu bồi thường.
 export async function getAllClaims() {
+  if (USE_MOCK) return mockService.getAllClaims();
+
   return readContract(async (contract) => {
     const totalClaims = Number(await contract.totalClaims());
 
@@ -271,6 +293,8 @@ export async function getAllClaims() {
 
 // Lấy số dư quỹ bảo hiểm.
 export async function getPoolBalance() {
+  if (USE_MOCK) return mockService.getPoolBalance();
+
   return readContract(async (contract) => {
     return BigInt(await contract.poolBalance());
   });
@@ -278,6 +302,8 @@ export async function getPoolBalance() {
 
 // Lấy khóa mã hóa công khai của địa chỉ.
 export async function getEncryptionKey(address) {
+  if (USE_MOCK) return mockService.getEncryptionKey(address);
+
   return readContract(async (contract) => {
     return contract.encryptionKeyOf(address);
   });
@@ -285,11 +311,15 @@ export async function getEncryptionKey(address) {
 
 // Lấy địa chỉ công ty bảo hiểm từ address.json.
 export async function getInsurerAddress() {
+  if (USE_MOCK) return mockService.getInsurerAddress();
+  
   return addressConfig.insurer;
 }
 
 // Lấy lịch sử event từ deployBlock.
 export async function getEvents(fromBlock = DEPLOY_BLOCK) {
+  if (USE_MOCK) return mockService.getEvents(fromBlock);
+  
   return readContract(async (contract) => {
     const startBlock = Math.max(
       DEPLOY_BLOCK,
@@ -338,6 +368,8 @@ export async function getEvents(fromBlock = DEPLOY_BLOCK) {
 
 // Tổng hợp thống kê từ event và dữ liệu claim.
 export async function getStats() {
+  if (USE_MOCK) return mockService.getStats();
+  
   const [events, claims, poolBalance] = await Promise.all([
     getEvents(),
     getAllClaims(),
@@ -390,6 +422,8 @@ export async function getStats() {
 
 // Tạo gói bảo hiểm mới.
 export async function createPlan(input, options = {}) {
+  if (USE_MOCK) return mockService.createPlan(input, options);
+  
   return writeContract(
     'createPlan',
     [
@@ -405,6 +439,8 @@ export async function createPlan(input, options = {}) {
 
 // Bật hoặc tắt gói bảo hiểm.
 export async function setPlanActive(planId, active, options = {}) {
+  if (USE_MOCK) return mockService.setPlanActive(planId, active, options);
+  
   return writeContract(
     'setPlanActive',
     [planId, active],
@@ -418,6 +454,8 @@ export async function authorizeHospital(
   status,
   options = {},
 ) {
+  if (USE_MOCK) return mockService.authorizeHospital(hospitalAddress, status, options);
+
   return writeContract(
     'authorizeHospital',
     [hospitalAddress, status],
@@ -427,6 +465,8 @@ export async function authorizeHospital(
 
 // Nạp tiền vào quỹ bảo hiểm.
 export async function fundPool(amountWei, options = {}) {
+  if (USE_MOCK) return mockService.fundPool(amountWei, options);
+  
   return writeContract(
     'fundPool',
     [],
@@ -440,6 +480,8 @@ export async function registerEncryptionKey(
   publicKeyPem,
   options = {},
 ) {
+  if (USE_MOCK) return mockService.registerEncryptionKey(publicKeyPem, options);
+  
   return writeContract(
     'registerEncryptionKey',
     [publicKeyPem],
@@ -454,6 +496,8 @@ export async function purchasePolicy(
   valueWei,
   options = {},
 ) {
+  if (USE_MOCK) return mockService.purchasePolicy(planId, encryptedHealthId, valueWei, options);
+  
   return writeContract(
     'purchasePolicy',
     [planId, encryptedHealthId],
@@ -464,6 +508,8 @@ export async function purchasePolicy(
 
 // Gửi yêu cầu bồi thường.
 export async function submitClaim(input, options = {}) {
+  if (USE_MOCK) return mockService.submitClaim(input, options);
+  
   return writeContract(
     'submitClaim',
     [
@@ -482,6 +528,8 @@ export async function confirmClaim(
   confirmedAmount,
   options = {},
 ) {
+  if (USE_MOCK) return mockService.confirmClaim(claimId, confirmedAmount, options);
+  
   return writeContract(
     'confirmClaim',
     [claimId, confirmedAmount],
@@ -491,6 +539,8 @@ export async function confirmClaim(
 
 // Duyệt yêu cầu bồi thường.
 export async function approveClaim(claimId, options = {}) {
+  if (USE_MOCK) return mockService.approveClaim(claimId, options);
+  
   return writeContract(
     'approveClaim',
     [claimId],
@@ -504,6 +554,8 @@ export async function rejectClaim(
   reason,
   options = {},
 ) {
+  if (USE_MOCK) return mockService.rejectClaim(claimId, reason, options);
+  
   return writeContract(
     'rejectClaim',
     [claimId, reason],
