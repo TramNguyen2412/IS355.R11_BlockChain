@@ -6,10 +6,19 @@ Cập nhật lần cuối: 12/11/2026
 - [x] C-02 đến C-05 — Khởi tạo frontend React/Vite, ví và điều hướng theo vai trò, Mock service, tiện ích và tích hợp contract service với ethers v6; kiểm thử Hardhat Local. Chi tiết lịch sử được lưu trong các commit trước.
 - [ ] C-06 — Màn hình Bệnh nhân ở chế độ Mock: đã triển khai các phần chính và kiểm tra phần lớn luồng; còn chờ kiểm thử APPROVED/REJECTED qua giao diện Insurer và xác minh nội dung PDF/gateway. Không sửa phần Insurer thuộc B.
 - [x] C-07 — Hoàn thiện README; tạo bản nháp báo cáo 2.7, 3.3 (kèm sơ đồ kiến trúc Mermaid), 4.1; tạo mẫu Word 15pt có trường mục lục tự động và caption đánh số. File: README.md; docs/report/Muc_2_7_C.md; docs/report/Muc_3_3_C.md; docs/report/Muc_4_1_C.md; docs/report/Mau_BaoCao_IS355.docx.
+- [X] C-08 — Kiểm thử tích hợp contract và service thật trên Hardhat Local, không sử dụng Mock. Đã hoàn thành kiểm thử chính của luồng Patient; đăng ký encryption key, đọc danh sách gói, mua policy/NFT và đọc policy bằng contract thật; nhập hồ sơ y tế giả qua giao diện Patient, upload hóa đơn và hồ sơ mã hóa lên IPFS, gửi claim và đọc lịch sử claim; bệnh viện xác nhận claim và truy xuất lại PDF/JSON từ IPFS.
 
 ## Đang làm / dừng ở đâu
-`Task hiện tại`: C-07 đã hoàn thành bản nháp và mẫu định dạng.
-- `Việc tiếp theo`: của C theo dõi C-06: phối hợp B kiểm tra các trạng thái claim qua Insurer và xác minh PDF/gateway; không sửa file thuộc B.
+`Task hiện tại`: C-08 — Kiểm thử tích hợp contract và service thật, rà soát lỗi thuộc phạm vi C.
+`Đã kiểm tra`: 
+- Hardhat Local, MetaMask và frontend chạy với VITE_USE_MOCK=false, chainId 31337.
+- Đăng ký encryption key, đọc 2 gói bảo hiểm, mua gói Basic 0.002 ETH và tạo NFT Token ID #1.
+- Đọc policy bằng getPolicyOf(), hạn mức bảo hiểm 0.02 ETH.
+- Nhập dữ liệu y tế giả qua giao diện Patient; upload hóa đơn PDF và hồ sơ mã hóa lên IPFS.
+- Gửi claim #1 với số tiền 0.012 ETH; bệnh viện xác nhận số tiền 0.012 ETH.
+- Truy xuất lại PDF từ IPFS và xác nhận đúng file đã upload; JSON đã được truy xuất và giải mã thành công.
+`Việc tiếp theo`: Rà soát hiển thị transaction hash, xác minh trạng thái claim sau khi bệnh viện xác nhận, chạy lại build và test.
+- Chờ B: Kiểm tra duyệt/từ chối claim qua Insurer.
 - Chưa có xác nhận C về kiểm thử toàn hệ thống trên Sepolia.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
@@ -55,6 +64,7 @@ Cập nhật lần cuối: 12/11/2026
 - docs/report/Muc_3_3_C.md 
 - docs/report/Muc_4_1_C.md
 - docs/report/Mau_BaoCao_IS355.docx
+
 
 `Theo dõi tiến độ`
 - docs/progress/PROGRESS_C.md
