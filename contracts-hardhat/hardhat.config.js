@@ -13,6 +13,15 @@ module.exports = {
     },
   },
   networks: {
+
+    // Phần thêm localhost để chạy C
+    localhost: {
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+      accounts: "remote",
+    },
+    // Hardhat Local node: http://127.0.0.1:8545
+
     sepolia: {
       url: SEPOLIA_RPC_URL,
       accounts: DEPLOYER_PRIVATE_KEY ? [DEPLOYER_PRIVATE_KEY] : [],

@@ -6,10 +6,14 @@ Cập nhật lần cuối: 12/11/2026
 - [x] C-02 đến C-05 — Khởi tạo frontend React/Vite, ví và điều hướng theo vai trò, Mock service, tiện ích và tích hợp contract service với ethers v6; kiểm thử Hardhat Local. Chi tiết lịch sử được lưu trong các commit trước.
 - [ ] C-06 — Màn hình Bệnh nhân ở chế độ Mock: đã triển khai các phần chính và kiểm tra phần lớn luồng; còn chờ kiểm thử APPROVED/REJECTED qua giao diện Insurer và xác minh nội dung PDF/gateway. Không sửa phần Insurer thuộc B.
 - [x] C-07 — Hoàn thiện README; tạo bản nháp báo cáo 2.7, 3.3 (kèm sơ đồ kiến trúc Mermaid), 4.1; tạo mẫu Word 15pt có trường mục lục tự động và caption đánh số. File: README.md; docs/report/Muc_2_7_C.md; docs/report/Muc_3_3_C.md; docs/report/Muc_4_1_C.md; docs/report/Mau_BaoCao_IS355.docx.
+- [X] C-08 — Kiểm thử tích hợp contract và service thật trên Hardhat Local, không sử dụng Mock. Đã hoàn thành kiểm thử chính của luồng Patient; đăng ký encryption key, đọc danh sách gói, mua policy/NFT và đọc policy bằng contract thật; nhập hồ sơ y tế giả qua giao diện Patient, upload hóa đơn và hồ sơ mã hóa lên IPFS, gửi claim và đọc lịch sử claim; bệnh viện xác nhận claim và truy xuất lại PDF/JSON từ IPFS.
+- [X] C-09 — Soạn checklist E2E cho luồng chuẩn Local: khởi tạo, đăng ký khóa, mua NFT, gửi claim, xác nhận, duyệt và chi trả; có phân vai, ví thử nghiệm và bảng ghi nhận H5. File: docs/plan/C/E2E_CHECKLIST.md.
 
 ## Đang làm / dừng ở đâu
-`Task hiện tại`: C-07 đã hoàn thành bản nháp và mẫu định dạng.
-- `Việc tiếp theo`: của C theo dõi C-06: phối hợp B kiểm tra các trạng thái claim qua Insurer và xác minh PDF/gateway; không sửa file thuộc B.
+`Task hiện tại`: C-09
+
+`Việc tiếp theo`: C-10
+- Chờ B: Kiểm tra duyệt/từ chối claim qua Insurer.
 - Chưa có xác nhận C về kiểm thử toàn hệ thống trên Sepolia.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
@@ -56,6 +60,13 @@ Cập nhật lần cuối: 12/11/2026
 - docs/report/Muc_4_1_C.md
 - docs/report/Mau_BaoCao_IS355.docx
 
+`C-08 - Sửa lỗi`
+- contracts-hardhat/hardhat.config.js
+- frontend/src/pages/patient/ClaimForm.jsx
+
+`C-09 — Checklist kiểm thử E2E`
+- docs/plan/C/E2E_CHECKLIST.md
+
 `Theo dõi tiến độ`
 - docs/progress/PROGRESS_C.md
 
@@ -79,4 +90,4 @@ Cập nhật lần cuối: 12/11/2026
 - Mock: VITE_USE_MOCK=true, VITE_CHAIN_ID=31337.
 - Local thật: VITE_USE_MOCK=false, VITE_CHAIN_ID=31337; cần Hardhat node và ABI/địa chỉ đã xuất.
 - Sepolia: VITE_USE_MOCK=false, VITE_CHAIN_ID=11155111; chỉ kiểm thử khi có địa chỉ contract và cấu hình hợp lệ.
-- Kết quả build gần nhất được ghi nhận trước đó: Vite build thành công; không chạy lại build trong task tài liệu C-07.
+- Kết quả build gần nhất được ghi nhận trước đó: Vite build thành công tại `C-08` trong 6.30s.
