@@ -1,5 +1,5 @@
 # PROGRESS — Thành viên A (Trâm)
-Cập nhật lần cuối: 10/11/2026
+Cập nhật lần cuối: 14/11/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `tram`
@@ -17,34 +17,49 @@ Cập nhật lần cuối: 10/11/2026
 - [x] A12 — Màn hình Bệnh viện phần 3: Xác nhận chi phí, ghép trang, chuyển sang contract thật (PendingConfirmList.jsx, HospitalPage.jsx, hospital.css; build Vite pass, hoàn thiện trọn vẹn màn hình Bệnh viện). Báo cáo: docs/plan/A/reports/REPORT_A12.md
 - [x] A13 — Deploy Sepolia CHÍNH THỨC (mốc H6): deploy contract 0x9B5868254c31818320d2DDCBb5B28f15af265b62 (block 12103715), cấp quyền bệnh viện, nạp quỹ 0.03 ETH, verify Etherscan có tích xanh, cập nhật address.json chainId 11155111. Báo cáo: docs/plan/A/reports/REPORT_A13.md
 - [x] A14 — Minh chứng, bảng gas, bảng test case và báo cáo kỹ thuật hoàn thiện: xuất bảng đo gas thực nghiệm (hardhat-gas-reporter), bảng 34 ca kiểm thử chi tiết (100% passing), thuyết minh 2 ràng buộc logic, danh sách minh chứng và báo cáo kỹ thuật hoàn chỉnh tại docs/report/TongHopTrienKhai_A.md. Báo cáo tổng hợp: docs/report/TongHopTrienKhai_A.md
+- [x] Soạn thảo toàn bộ các chương báo cáo đồ án Word và Dàn ý Slide thuyết trình cho Thành viên A theo Master Plan và Rubric chấm điểm:
+  - Chương 2: `docs/report/Muc_2_A.md` (Mục 2.1, 2.2, 2.3, 2.4)
+  - Chương 3: `docs/report/Muc_3_6_A.md` (Mục 3.6 Thiết kế Smart Contract)
+  - Chương 4: `docs/report/Muc_4_2_A.md` (Mục 4.2 Hiện thực Smart Contract & Kỹ thuật ràng buộc logic & Soulbound NFT)
+  - Chương 4: `docs/report/Muc_4_5_A.md` (Mục 4.5 Hiện thực giao diện DApp - Phân hệ Bệnh viện)
+  - Chương 4: `docs/report/Muc_4_6_A.md` (Mục 4.6 Triển khai thực tế trên Ethereum Sepolia Testnet)
+  - Chương 5: `docs/report/Muc_5_1_A.md` (Mục 5.1 Kịch bản và kết quả Unit Test)
+  - Chương 5: `docs/report/Muc_5_3_A.md` (Mục 5.3 Đánh giá an toàn và bảo mật Smart Contract)
+  - Chương 5: `docs/report/Muc_5_4_A.md` (Mục 5.4 Phân tích chi phí Gas)
+  - Slide thuyết trình: `docs/slides/slides_A.md` (Dàn ý 6 slide súc tích cho phần của A)
 
 ## Bước tiếp theo
-- A hoàn tất toàn bộ nhiệm vụ lập trình và báo cáo chuyên trách; sẵn sàng hỗ trợ nhóm ghép slide, báo cáo tổng và quay video demo liên luồng (SUB-1 04/12, SUB-2 08/12).
+- Hỗ trợ Lan Anh (C) ghép các file markdown của A vào file mẫu Word chính thức `docs/report/Mau_BaoCao_IS355.docx`.
+- Hỗ trợ nhóm tập dượt thuyết trình dựa trên dàn ý `docs/slides/slides_A.md`.
 
 ## Đang làm / dừng ở đâu
-- Task hiện tại: A14 đã hoàn thành. Toàn bộ phần việc của Thành viên A (Trâm) đã hoàn tất trọn vẹn.
-- Trạng thái: Sẵn sàng demo và nghiệm thu.
+- Toàn bộ nội dung báo cáo văn bản Word và dàn ý Slide cho phân hệ của A đã được biên soạn hoàn chỉnh 100%, sẵn sàng để copy-paste trực tiếp.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `docs/report/BangGas_A.md` — tạo mới
-- `docs/report/BangTestCase_A.md` — tạo mới
-- `docs/report/Muc4_2_RangBuoc_A.md` — tạo mới
-- `docs/report/DanhSachMinhChung_A.md` — tạo mới
-- `docs/report/TongHopTrienKhai_A.md` — tạo mới
+- `docs/report/Muc_2_A.md` — tạo mới (Chương 2)
+- `docs/report/Muc_3_6_A.md` — tạo mới (Chương 3)
+- `docs/report/Muc_4_2_A.md` — tạo mới (Chương 4)
+- `docs/report/Muc_4_5_A.md` — tạo mới (Chương 4)
+- `docs/report/Muc_4_6_A.md` — tạo mới (Chương 4)
+- `docs/report/Muc_5_1_A.md` — tạo mới (Chương 5)
+- `docs/report/Muc_5_3_A.md` — tạo mới (Chương 5)
+- `docs/report/Muc_5_4_A.md` — tạo mới (Chương 5)
+- `docs/slides/slides_A.md` — tạo mới (Slide thuyết trình)
+- `docs/report/images/A/hospital_ui.jpg` — tạo mới
+- `docs/report/images/A/etherscan_overview.jpg` — tạo mới
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Hoàn thành đầy đủ bộ tài liệu kỹ thuật minh chứng phục vụ chấm điểm đồ án IS355 trong thư mục `docs/report/`.
-- Hợp đồng `HealthInsuranceNFT` đóng băng vĩnh viễn trên Sepolia tại `0x9B5868254c31818320d2DDCBb5B28f15af265b62`.
-- Giao diện Bệnh viện (`/hospital`) hoàn chỉnh 4/4 khối chức năng, build Vite sạch lỗi.
+- Định dạng nội dung báo cáo chuẩn văn phong học thuật, sử dụng đại từ khách quan ("Hệ thống...", "Hợp đồng..."), không nhắc đến AI, số liệu bám sát thực nghiệm.
+- Cấu trúc các file khớp hoàn toàn với quy ước đặt tên của nhóm (tương tự `Muc_2_7_C.md`, `Muc_3_3_C.md`, `Muc_4_1_C.md` của Lan Anh).
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- B và C tiếp tục hoàn thiện giao diện Quản trị viên và Bệnh nhân theo tiến độ để chuẩn bị ghép luồng demo chung.
+- C (Lan Anh): Khi ghép file Word tổng `Mau_BaoCao_IS355.docx`, lấy trực tiếp nội dung các mục tương ứng từ các file `Muc_*_A.md` trong thư mục `docs/report/`.
+- C (Lan Anh): Lấy dàn ý từ `docs/slides/slides_A.md` để đưa vào slide tổng của nhóm.
 
 ## Cách chạy / kiểm tra phần đã làm
-- Chạy kiểm thử: `cmd /c "cd contracts-hardhat && npx hardhat test"` (34 passing).
-- Kiểm tra hợp đồng on-chain: Etherscan https://sepolia.etherscan.io/address/0x9B5868254c31818320d2DDCBb5B28f15af265b62#code.
-- Đọc tài liệu báo cáo: `docs/report/TongHopTrienKhai_A.md`.
+- Xem và đọc trực tiếp các file báo cáo trong thư mục `docs/report/` và `docs/slides/`.
+- Kiểm tra các liên kết hình ảnh minh chứng trong `docs/report/images/A/`.
