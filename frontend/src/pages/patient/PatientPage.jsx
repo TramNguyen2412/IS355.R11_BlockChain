@@ -12,6 +12,7 @@ import PolicyCard from './PolicyCard';
 import ClaimForm from './ClaimForm';
 import ClaimList from './ClaimList';
 import RecordViewer from './RecordViewer';
+import './patient.css';
 
 function PatientPage() {
   const { address } = useWallet();

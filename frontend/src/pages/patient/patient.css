@@ -1,0 +1,439 @@
+
+/* =========================================
+   MEDICHAIN - PATIENT PAGE
+   Đồng bộ giao diện với Hospital
+   Chỉ thay đổi presentation, không thay đổi logic
+========================================= */
+
+.patient-page {
+  width: 100%;
+  color: #1f2937;
+}
+
+/* ---------- Page heading ---------- */
+
+.patient-page > h2,
+.patient-page h2 {
+  color: #1e293b;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.patient-page > p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ---------- Main sections ---------- */
+
+.patient-page section,
+.patient-page .patient-section {
+  margin: 24px 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.patient-page section > h3,
+.patient-page .patient-section > h3 {
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  color: #1e3a8a;
+  font-size: 19px;
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.patient-page section > h4 {
+  color: #334155;
+  font-size: 16px;
+  margin: 18px 0 12px;
+}
+
+/* ---------- Cards ---------- */
+
+.patient-plan-card,
+.patient-policy-card,
+.patient-claim-card {
+  margin: 0 0 16px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #dbe2ea !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.patient-plan-card:hover,
+.patient-policy-card:hover,
+.patient-claim-card:hover {
+  border-color: #93c5fd !important;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08);
+}
+
+.patient-plan-card h4,
+.patient-policy-card h4,
+.patient-claim-card h4 {
+  margin: 0 0 16px;
+  color: #1e40af;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.patient-plan-card p,
+.patient-policy-card p,
+.patient-claim-card p {
+  margin: 10px 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.patient-plan-card strong,
+.patient-policy-card strong,
+.patient-claim-card strong {
+  color: #334155;
+}
+
+/* ---------- Plan list ---------- */
+
+.patient-plan-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.patient-plan-card {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.patient-plan-card h4 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.patient-plan-card a {
+  display: inline-flex;
+  margin-top: 10px;
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.patient-plan-card a:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+/* ---------- Insurance policy card ---------- */
+
+.patient-policy-card {
+  max-width: 100% !important;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.patient-policy-card h4 {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #dbeafe;
+}
+
+.patient-policy-card p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.patient-policy-card p strong {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Forms ---------- */
+
+.patient-key-setup,
+.patient-purchase-form,
+.patient-record-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.patient-key-setup > div,
+.patient-purchase-form > div,
+.patient-record-viewer form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.patient-page label {
+  display: block;
+  margin-bottom: 6px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.patient-page input,
+.patient-page select,
+.patient-page textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  color: #1f2937;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.patient-page textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.patient-page input:focus,
+.patient-page select:focus,
+.patient-page textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+.patient-page input:disabled,
+.patient-page select:disabled,
+.patient-page textarea:disabled {
+  color: #94a3b8;
+  background: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.patient-page input::placeholder,
+.patient-page textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* ---------- Buttons ---------- */
+
+.patient-page button {
+  min-height: 40px;
+  padding: 9px 16px;
+  color: #ffffff;
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.patient-page button:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+
+.patient-page button:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.3);
+  outline-offset: 2px;
+}
+
+.patient-page button:disabled {
+  color: #94a3b8;
+  background: #e2e8f0;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---------- Key setup actions ---------- */
+
+.patient-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.patient-actions button {
+  flex: 0 0 auto;
+}
+
+/* ---------- Purchase form ---------- */
+
+.patient-purchase-form > p {
+  margin: 0;
+  padding: 12px 14px;
+  color: #1e40af;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.patient-purchase-form > button[type="submit"],
+.patient-record-viewer button[type="submit"] {
+  align-self: flex-start;
+  min-width: 160px;
+}
+
+/* ---------- Claim list ---------- */
+
+.patient-claim-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.patient-claim-card {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.patient-claim-card > div:first-child {
+  display: inline-flex !important;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.patient-claim-card code,
+.patient-record-viewer code {
+  display: inline-block;
+  max-width: 100%;
+  padding: 3px 6px;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 5px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ---------- Record viewer ---------- */
+
+.patient-record-viewer > section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8fafc;
+  border: 1px solid #dbe2ea;
+  border-radius: 12px;
+}
+
+.patient-record-viewer > section h4 {
+  margin-top: 0;
+  color: #1e40af;
+  font-size: 18px;
+}
+
+.patient-record-viewer > section h5 {
+  margin: 20px 0 10px;
+  padding-bottom: 8px;
+  color: #334155;
+  font-size: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.patient-record-viewer > section p {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.patient-record-viewer > section ul {
+  padding-left: 22px;
+  color: #475569;
+  line-height: 1.8;
+}
+
+/* ---------- Messages and transaction status ---------- */
+
+.patient-page [role="status"] {
+  padding: 10px 14px;
+  color: #1e40af;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.patient-page [role="alert"] {
+  padding: 10px 14px;
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.patient-page .tx-toast {
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Empty states ---------- */
+
+.patient-page .patient-plan-list > p,
+.patient-page .patient-claim-list > p,
+.patient-page section > p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .patient-page section,
+  .patient-page .patient-section {
+    padding: 18px;
+    margin: 18px 0;
+  }
+
+  .patient-page > h2,
+  .patient-page h2 {
+    font-size: 23px;
+  }
+
+  .patient-plan-list,
+  .patient-claim-list {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-actions {
+    flex-direction: column;
+  }
+
+  .patient-actions button {
+    width: 100%;
+  }
+
+  .patient-purchase-form > button[type="submit"],
+  .patient-record-viewer button[type="submit"] {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .patient-page section,
+  .patient-page .patient-section {
+    padding: 14px;
+  }
+
+  .patient-plan-card,
+  .patient-policy-card,
+  .patient-claim-card {
+    padding: 15px;
+  }
+
+  .patient-page button {
+    width: 100%;
+  }
+}

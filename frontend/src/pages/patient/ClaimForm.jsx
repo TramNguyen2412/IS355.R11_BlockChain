@@ -10,9 +10,9 @@ import {
 import { cryptoService, ipfsService } from '../../services/index.js';
 import TxToast from '../../components/shared/TxToast';
 
-// Hardhat Account #1: Hospital đã được Admin cấp HOSPITAL_ROLE.
+// Hospital wallet on Sepolia.
 const HOSPITAL_ADDRESS =
-  '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
+  '0xb381e33456e08F79cdeA9722506dabbdF2933F12';
 
 const emptyLab = () => ({ test: '', value: '', unit: '' });
 
