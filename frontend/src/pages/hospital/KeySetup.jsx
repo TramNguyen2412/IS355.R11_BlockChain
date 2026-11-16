@@ -76,10 +76,15 @@ export default function KeySetup() {
   return (
     <section className="hospital-card">
       <h2>1. Khóa mã hóa của bệnh viện</h2>
+      {!address && (
+        <p className="hospital-warn" style={{ marginBottom: 12 }}>
+          ⚠️ Hãy bấm nút <strong>"Kết nối ví MetaMask"</strong> ở góc trên trang web trước để bắt đầu.
+        </p>
+      )}
       {!localPair && (
         <div className="hospital-row">
           <span className="hospital-warn">Chưa có khóa trong trình duyệt này.</span>
-          <button className="hospital-btn" disabled={busy || !address} onClick={handleCreate}>Tạo khóa mã hóa</button>
+          <button className="hospital-btn" disabled={busy || !address} onClick={handleCreate} title={!address ? "Vui lòng kết nối ví MetaMask trước" : ""}>Tạo khóa mã hóa</button>
         </div>
       )}
       {localPair && !registeredOk && (
