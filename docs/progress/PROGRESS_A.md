@@ -1,5 +1,5 @@
 # PROGRESS — Thành viên A (Trâm)
-Cập nhật lần cuối: 16/11/2026
+Cập nhật lần cuối: 17/11/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `tram`
@@ -28,26 +28,24 @@ Cập nhật lần cuối: 16/11/2026
   - Chương 5: `docs/report/Muc_5_4_A.md` (Mục 5.4 Phân tích chi phí Gas)
   - Slide thuyết trình: `docs/slides/slides_A.md` (Dàn ý 6 slide súc tích cho phần của A)
 - [x] Hỗ trợ kiểm thử liên vai trò trên Sepolia: Dùng ví Admin gọi `createPlan()` tạo thành công 2 gói bảo hiểm mẫu chuẩn (Plan #1: Gói Cơ bản 0.002 ETH; Plan #2: Gói Nâng cao 0.005 ETH) trên Sepolia tại contract `0x9B5868254c31818320d2DDCBb5B28f15af265b62`. Tổng số gói on-chain hiện tại: 2. Hỗ trợ Lan Anh (C) kiểm thử luồng mua bảo hiểm Bệnh nhân.
+- [x] Đồng bộ code mới nhất từ `origin/main` và cập nhật kết quả kiểm thử E2E vào `docs/plan/C/E2E_CHECKLIST.md` (ghi nhận kết quả kiểm thử đạt 100% của Trâm cho mốc H5).
 
 ## Bước tiếp theo
-- Hỗ trợ Lan Anh (C) kiểm thử trơn tru giao diện Bệnh nhân trên Sepolia và chuẩn bị merge Pull Request vào `main`.
+- Hỗ trợ Lan Anh (C) hoàn tất video demo liên luồng và tổng hợp bản nộp Word/Slide chính thức.
 
 ## Đang làm / dừng ở đâu
-- Các gói bảo hiểm trên Sepolia đã được tạo thành công trên blockchain, sẵn sàng cho giao diện Patient tương tác.
+- Toàn bộ checklist kiểm thử E2E và các hạng mục triển khai của Thành viên A đã hoàn thành 100%.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `contracts-hardhat/scripts/createSepoliaPlans.js` — tạo mới
+- `docs/plan/C/E2E_CHECKLIST.md` — sửa (cập nhật kết quả kiểm thử E2E)
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Không cấp `DEFAULT_ADMIN_ROLE` cho ví Patient của Lan Anh vì sẽ gây xung đột với `roleDetection.js` (hệ thống sẽ tự nhận nhầm ví bệnh nhân thành công ty bảo hiểm và chuyển hướng sang `/insurer`).
-- Thay vào đó, dùng ví Admin khởi tạo 2 gói bảo hiểm mẫu trực tiếp on-chain, đảm bảo dữ liệu chuẩn cho toàn bộ nhóm cùng kiểm thử.
+- Ghi nhận kết quả kiểm thử E2E của Trâm (A) trên cả môi trường Local (31337) và Sepolia (11155111).
+- Đồng bộ nhánh `tram` bắt kịp `main` sạch sẽ.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- C (Lan Anh): Tải lại (refresh) trang Bệnh nhân (`/patient`), 2 gói bảo hiểm đã xuất hiện trên giao diện. Có thể tiến hành mua thử nghiệm ngay bằng ví `0x1441...`.
-
-## Cách chạy / kiểm tra phần đã làm
-- Xem danh sách gói trên Sepolia Etherscan: Gọi hàm `getPlans()` tại tab Read Contract của `0x9B5868254c31818320d2DDCBb5B28f15af265b62`.
+- C (Lan Anh) và B (Phương Anh): Kiểm tra kết quả trong `E2E_CHECKLIST.md` để chuẩn bị cho buổi nghiệm thu đồ án.

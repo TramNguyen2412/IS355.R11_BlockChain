@@ -53,13 +53,13 @@ Lưu ý:
 
 Mỗi thành viên tự thực hiện các bước sau trên máy cá nhân.
 
-- [ ] Đã checkout nhánh cá nhân và cập nhật code mới nhất từ `main`.
-- [ ] Đã cài đặt dependencies.
-- [ ] Đã có MetaMask và 4 tài khoản Hardhat thử nghiệm.
-- [ ] Đã cấu hình frontend sử dụng contract thật, không dùng Mock.
-- [ ] Đã chuẩn bị file ABI và địa chỉ contract Local.
-- [ ] Đã có cấu hình Pinata hợp lệ để kiểm tra upload và retrieve IPFS.
-- [ ] Đã chuẩn bị dữ liệu y tế giả và hóa đơn mẫu.
+- [x] Đã checkout nhánh cá nhân và cập nhật code mới nhất từ `main`.
+- [x] Đã cài đặt dependencies.
+- [x] Đã có MetaMask và 4 tài khoản Hardhat thử nghiệm.
+- [x] Đã cấu hình frontend sử dụng contract thật, không dùng Mock.
+- [x] Đã chuẩn bị file ABI và địa chỉ contract Local.
+- [x] Đã có cấu hình Pinata hợp lệ để kiểm tra upload và retrieve IPFS.
+- [x] Đã chuẩn bị dữ liệu y tế giả và hóa đơn mẫu.
 
 Cấu hình frontend:
 
@@ -88,10 +88,10 @@ Tại thư mục `contracts-hardhat`, chạy:
 npx hardhat node
 ```
 
-- [ ] Hardhat node khởi động thành công.
-- [ ] RPC hoạt động tại `http://127.0.0.1:8545/`.
-- [ ] Hiển thị danh sách 20 tài khoản thử nghiệm.
-- [ ] Network sử dụng Chain ID 31337.
+- [x] Hardhat node khởi động thành công.
+- [x] RPC hoạt động tại `http://127.0.0.1:8545/`.
+- [x] Hiển thị danh sách 20 tài khoản thử nghiệm.
+- [x] Network sử dụng Chain ID 31337.
 
 Giữ terminal này hoạt động trong suốt quá trình kiểm thử.
 
@@ -107,11 +107,11 @@ Mở terminal mới tại `contracts-hardhat`:
 npx hardhat run scripts/deploy.js --network localhost
 ```
 
-- [ ] Deploy `HealthInsuranceNFT` thành công.
-- [ ] Có địa chỉ contract mới.
-- [ ] Xuất ABI và địa chỉ contract theo cấu hình của dự án.
-- [ ] Frontend sử dụng đúng địa chỉ contract Local.
-- [ ] Trường `insurer` trong `address.json` được ghi nhận đúng.
+- [x] Deploy `HealthInsuranceNFT` thành công.
+- [x] Có địa chỉ contract mới.
+- [x] Xuất ABI và địa chỉ contract theo cấu hình của dự án.
+- [x] Frontend sử dụng đúng địa chỉ contract Local.
+- [x] Trường `insurer` trong `address.json` được ghi nhận đúng.
 
 ### Bước 3.3. Seed dữ liệu
 
@@ -125,12 +125,12 @@ Chạy:
 npx hardhat run scripts/seed.js --network localhost
 ```
 
-- [ ] Tạo thành công 2 gói bảo hiểm.
-- [ ] Gói Cơ bản có giá 0.002 ETH, hạn mức 0.02 ETH, thời hạn 30 ngày.
-- [ ] Gói Nâng cao có giá 0.005 ETH, hạn mức 0.05 ETH, thời hạn 90 ngày.
-- [ ] Ví Bệnh viện được cấp quyền.
-- [ ] Quỹ bảo hiểm được nạp 0.1 ETH.
-- [ ] Các CID điều khoản gói được thiết lập theo cấu hình.
+- [x] Tạo thành công 2 gói bảo hiểm.
+- [x] Gói Cơ bản có giá 0.002 ETH, hạn mức 0.02 ETH, thời hạn 30 ngày.
+- [x] Gói Nâng cao có giá 0.005 ETH, hạn mức 0.05 ETH, thời hạn 90 ngày.
+- [x] Ví Bệnh viện được cấp quyền.
+- [x] Quỹ bảo hiểm được nạp 0.1 ETH.
+- [x] Các CID điều khoản gói được thiết lập theo cấu hình.
 
 ### Bước 3.4. Khởi động frontend
 
@@ -143,11 +143,11 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-- [ ] Frontend khởi động thành công.
-- [ ] Mở được ứng dụng trên trình duyệt.
-- [ ] MetaMask kết nối được Hardhat Local.
-- [ ] Chain ID là 31337.
-- [ ] Ứng dụng đang sử dụng contract thật, không phải Mock.
+- [x] Frontend khởi động thành công.
+- [x] Mở được ứng dụng trên trình duyệt.
+- [x] MetaMask kết nối được Hardhat Local.
+- [x] Chain ID là 31337.
+- [x] Ứng dụng đang sử dụng contract thật, không phải Mock.
 
 ---
 
@@ -159,14 +159,14 @@ npm.cmd run dev
 
 **Ví:** Account #0 — ADMIN.
 
-- [ ] Kết nối MetaMask bằng ví Admin.
-- [ ] Mở màn hình Công ty bảo hiểm.
-- [ ] Kiểm tra danh sách 2 gói bảo hiểm.
-- [ ] Kiểm tra thông tin PDF điều khoản bảo hiểm trên IPFS.
-- [ ] Kiểm tra danh sách bệnh viện được cấp quyền.
-- [ ] Kiểm tra số dư quỹ bảo hiểm.
-- [ ] Tạo cặp khóa RSA trên giao diện.
-- [ ] Đăng ký khóa công khai bằng `registerEncryptionKey`.
+- [x] Kết nối MetaMask bằng ví Admin.
+- [x] Mở màn hình Công ty bảo hiểm.
+- [x] Kiểm tra danh sách 2 gói bảo hiểm.
+- [x] Kiểm tra thông tin PDF điều khoản bảo hiểm trên IPFS.
+- [x] Kiểm tra danh sách bệnh viện được cấp quyền.
+- [x] Kiểm tra số dư quỹ bảo hiểm.
+- [x] Tạo cặp khóa RSA trên giao diện.
+- [x] Đăng ký khóa công khai bằng `registerEncryptionKey`.
 
 **Kết quả mong đợi:**
 - Giao diện nhận diện đúng vai trò Admin.
@@ -182,10 +182,10 @@ Người thực hiện: Bệnh nhân.
 
 Ví: Account #2 — PATIENT.
 
-- [ ] Kết nối MetaMask bằng ví Bệnh nhân.
-- [ ] Mở màn hình Bệnh nhân.
-- [ ] Tạo cặp khóa RSA.
-- [ ] Đăng ký khóa công khai bằng `registerEncryptionKey`.
+- [x] Kết nối MetaMask bằng ví Bệnh nhân.
+- [x] Mở màn hình Bệnh nhân.
+- [x] Tạo cặp khóa RSA.
+- [x] Đăng ký khóa công khai bằng `registerEncryptionKey`.
 
 **Kết quả mong đợi:** Thông báo đăng ký khóa thành công.
 
@@ -195,10 +195,10 @@ Người thực hiện: Bệnh viện.
 
 Ví: Account #1 — HOSPITAL.
 
-- [ ] Kết nối MetaMask bằng ví Bệnh viện.
-- [ ] Mở màn hình Bệnh viện.
-- [ ] Tạo cặp khóa RSA.
-- [ ] Đăng ký khóa công khai bằng `registerEncryptionKey`.
+- [x] Kết nối MetaMask bằng ví Bệnh viện.
+- [x] Mở màn hình Bệnh viện.
+- [x] Tạo cặp khóa RSA.
+- [x] Đăng ký khóa công khai bằng `registerEncryptionKey`.
 
 **Kết quả mong đợi:** Thông báo đăng ký khóa thành công.
 
@@ -208,13 +208,13 @@ Ví: Account #1 — HOSPITAL.
 
 **Ví:** Account #2 — PATIENT.
 
-- [ ] Mở danh sách gói bảo hiểm.
-- [ ] Chọn Gói Cơ bản.
-- [ ] Kiểm tra giá 0.002 ETH.
-- [ ] Kiểm tra hạn mức 0.02 ETH.
-- [ ] Kiểm tra thời hạn 30 ngày.
-- [ ] Nhập mã số bảo hiểm y tế giả.
-- [ ] Xác nhận mua bảo hiểm trên MetaMask.
+- [x] Mở danh sách gói bảo hiểm.
+- [x] Chọn Gói Cơ bản.
+- [x] Kiểm tra giá 0.002 ETH.
+- [x] Kiểm tra hạn mức 0.02 ETH.
+- [x] Kiểm tra thời hạn 30 ngày.
+- [x] Nhập mã số bảo hiểm y tế giả.
+- [x] Xác nhận mua bảo hiểm trên MetaMask.
 
 **Hàm contract:** `purchasePolicy`.
 
@@ -232,10 +232,10 @@ Ví: Account #1 — HOSPITAL.
 
 **Ví:** Account #1 — HOSPITAL.
 
-- [ ] Kết nối MetaMask bằng ví Bệnh viện.
-- [ ] Mở chức năng kiểm tra thẻ.
-- [ ] Nhập địa chỉ ví Bệnh nhân.
-- [ ] Thực hiện xác minh bằng `verifyInsurance`.
+- [x] Kết nối MetaMask bằng ví Bệnh viện.
+- [x] Mở chức năng kiểm tra thẻ.
+- [x] Nhập địa chỉ ví Bệnh nhân.
+- [x] Thực hiện xác minh bằng `verifyInsurance`.
 
 **Kết quả mong đợi:**
 - Thẻ bảo hiểm được xác minh hợp lệ.
@@ -249,20 +249,20 @@ Ví: Account #1 — HOSPITAL.
 
 **Ví:** Account #1 — HOSPITAL.
 
-- [ ] Nhập thông tin khám chữa bệnh giả.
-- [ ] Nhập chi phí điều trị 0.012 ETH.
-- [ ] Chọn hóa đơn mẫu.
-- [ ] Chọn kết quả xét nghiệm mẫu.
-- [ ] Tạo hồ sơ y tế mã hóa.
-- [ ] Mã hóa hồ sơ cho các bên được phép truy cập: Bệnh nhân, Bệnh viện và Công ty bảo hiểm.
-- [ ] Upload hóa đơn lên IPFS.
-- [ ] Upload JSON hồ sơ đã mã hóa lên IPFS.
-- [ ] Ghi nhận CID do Pinata trả về.
+- [x] Nhập thông tin khám chữa bệnh giả.
+- [x] Nhập chi phí điều trị 0.012 ETH.
+- [x] Chọn hóa đơn mẫu.
+- [x] Chọn kết quả xét nghiệm mẫu.
+- [x] Tạo hồ sơ y tế mã hóa.
+- [x] Mã hóa hồ sơ cho các bên được phép truy cập: Bệnh nhân, Bệnh viện và Công ty bảo hiểm.
+- [x] Upload hóa đơn lên IPFS.
+- [x] Upload JSON hồ sơ đã mã hóa lên IPFS.
+- [x] Ghi nhận CID do Pinata trả về.
 
 **Hàm contract:** `submitClaim`.
 
-- [ ] Gửi yêu cầu bồi thường.
-- [ ] Xác nhận giao dịch trên MetaMask.
+- [x] Gửi yêu cầu bồi thường.
+- [x] Xác nhận giao dịch trên MetaMask.
 
 **Kết quả mong đợi:**
 - Upload IPFS thành công.
@@ -278,11 +278,11 @@ Ví: Account #1 — HOSPITAL.
 
 **Ví:** Account #1 — HOSPITAL.
 
-- [ ] Mở danh sách yêu cầu bồi thường.
-- [ ] Tìm claim vừa gửi.
-- [ ] Kiểm tra số tiền yêu cầu 0.012 ETH.
-- [ ] Thực hiện xác nhận chi phí bằng `confirmClaim`.
-- [ ] Xác nhận giao dịch trên MetaMask.
+- [x] Mở danh sách yêu cầu bồi thường.
+- [x] Tìm claim vừa gửi.
+- [x] Kiểm tra số tiền yêu cầu 0.012 ETH.
+- [x] Thực hiện xác nhận chi phí bằng `confirmClaim`.
+- [x] Xác nhận giao dịch trên MetaMask.
 
 **Kết quả mong đợi:**
 - Giao dịch xác nhận thành công.
@@ -295,16 +295,16 @@ Ví: Account #1 — HOSPITAL.
 
 **Ví:** Account #0 — ADMIN.
 
-- [ ] Kết nối MetaMask bằng ví Admin.
-- [ ] Mở danh sách yêu cầu bồi thường.
-- [ ] Tìm claim vừa được Bệnh viện xác nhận.
-- [ ] Kiểm tra địa chỉ Bệnh nhân.
-- [ ] Kiểm tra số tiền 0.012 ETH.
-- [ ] Chọn chức năng xem hồ sơ IPFS.
-- [ ] Truy xuất hóa đơn từ IPFS.
-- [ ] Truy xuất JSON hồ sơ mã hóa từ IPFS.
-- [ ] Giải mã hồ sơ bằng khóa riêng Admin.
-- [ ] Kiểm tra thông tin bệnh nhân, chẩn đoán, điều trị và hóa đơn.
+- [x] Kết nối MetaMask bằng ví Admin.
+- [x] Mở danh sách yêu cầu bồi thường.
+- [x] Tìm claim vừa được Bệnh viện xác nhận.
+- [x] Kiểm tra địa chỉ Bệnh nhân.
+- [x] Kiểm tra số tiền 0.012 ETH.
+- [x] Chọn chức năng xem hồ sơ IPFS.
+- [x] Truy xuất hóa đơn từ IPFS.
+- [x] Truy xuất JSON hồ sơ mã hóa từ IPFS.
+- [x] Giải mã hồ sơ bằng khóa riêng Admin.
+- [x] Kiểm tra thông tin bệnh nhân, chẩn đoán, điều trị và hóa đơn.
 
 **Kết quả mong đợi:**
 - Admin truy xuất được hồ sơ từ IPFS.
@@ -314,9 +314,9 @@ Ví: Account #1 — HOSPITAL.
 
 Tiếp tục duyệt yêu cầu:
 
-- [ ] Chọn chức năng Duyệt và chi trả.
-- [ ] Thực hiện `approveClaim`.
-- [ ] Xác nhận giao dịch trên MetaMask.
+- [x] Chọn chức năng Duyệt và chi trả.
+- [x] Thực hiện `approveClaim`.
+- [x] Xác nhận giao dịch trên MetaMask.
 
 **Kết quả mong đợi:**
 - Giao dịch thành công.
@@ -330,12 +330,12 @@ Tiếp tục duyệt yêu cầu:
 
 **Ví:** Account #2 — PATIENT.
 
-- [ ] Kết nối MetaMask bằng ví Bệnh nhân.
-- [ ] Mở lịch sử yêu cầu bồi thường.
-- [ ] Tìm claim vừa được duyệt.
-- [ ] Kiểm tra trạng thái Approved.
-- [ ] Kiểm tra số tiền đã được duyệt.
-- [ ] Kiểm tra hạn mức bảo hiểm còn lại.
+- [x] Kết nối MetaMask bằng ví Bệnh nhân.
+- [x] Mở lịch sử yêu cầu bồi thường.
+- [x] Tìm claim vừa được duyệt.
+- [x] Kiểm tra trạng thái Approved.
+- [x] Kiểm tra số tiền đã được duyệt.
+- [x] Kiểm tra hạn mức bảo hiểm còn lại.
 
 **Kết quả mong đợi:**
 
@@ -358,9 +358,9 @@ Số dư ví Bệnh nhân tăng tương ứng khoản chi trả, không tính ph
 
 **Ví:** Account #0 — ADMIN.
 
-- [ ] Tạo tình huống kiểm tra claim có số tiền 0.015 ETH khi hạn mức còn lại chỉ 0.008 ETH.
-- [ ] Thực hiện kiểm tra trước giao dịch bằng chức năng dryRun nếu được hỗ trợ.
-- [ ] Kiểm tra thông báo lỗi.
+- [x] Tạo tình huống kiểm tra claim có số tiền 0.015 ETH khi hạn mức còn lại chỉ 0.008 ETH.
+- [x] Thực hiện kiểm tra trước giao dịch bằng chức năng dryRun nếu được hỗ trợ.
+- [x] Kiểm tra thông báo lỗi.
 
 **Kết quả mong đợi:**
 - Giao dịch duyệt bị chặn.
@@ -373,8 +373,8 @@ Số dư ví Bệnh nhân tăng tương ứng khoản chi trả, không tính ph
 
 **Ví:** Account #3 — OUTSIDER.
 
-- [ ] Kết nối MetaMask bằng ví OUTSIDER.
-- [ ] Thử truy cập hồ sơ mã hóa không được cấp quyền.
+- [x] Kết nối MetaMask bằng ví OUTSIDER.
+- [x] Thử truy cập hồ sơ mã hóa không được cấp quyền.
 
 **Kết quả mong đợi:**
 - Người ngoài không có khóa giải mã phù hợp.
@@ -389,9 +389,9 @@ Mỗi thành viên tự ghi nhận kết quả sau khi chạy checklist trên m�
 
 | Thành viên | Ngày kiểm thử | Môi trường | Kết quả |
 |---|---|---|---|
-| Trâm (A) |  | Local / 31337 | Chưa xác nhận |
+| Trâm (A) | 17/11/2026 | Local / 31337 & Sepolia / 11155111 | Đạt (100% Pass) |
 | Phương Anh (B) |  | Local / 31337 | Chưa xác nhận |
-| Lan Anh (C) |  | Local / 31337 | Chưa xác nhận |
+| Lan Anh (C) | 12/11/2026 | Local / 31337 & Sepolia / 11155111 | Đạt (Pass) |
 
 ### Ghi nhận lỗi
 
@@ -411,18 +411,18 @@ Không ghi private key, khóa riêng RSA, JWT Pinata hoặc dữ liệu y tế b
 
 ## 7. Điều kiện hoàn thành H5
 
-- [ ] Deploy contract Local thành công.
-- [ ] Seed dữ liệu thành công.
-- [ ] Admin đăng ký khóa mã hóa thành công.
-- [ ] Bệnh nhân đăng ký khóa mã hóa thành công.
-- [ ] Bệnh viện đăng ký khóa mã hóa thành công.
-- [ ] Bệnh nhân mua được Gói Cơ bản và nhận NFT.
-- [ ] Bệnh viện xác minh được thẻ bảo hiểm.
-- [ ] Bệnh viện gửi claim và upload dữ liệu lên IPFS thành công.
-- [ ] Bệnh viện xác nhận chi phí.
-- [ ] Admin truy xuất và giải mã được hồ sơ.
-- [ ] Admin duyệt claim và chi trả thành công.
-- [ ] Bệnh nhân kiểm tra được trạng thái Approved.
-- [ ] Mỗi thành viên tự chạy toàn bộ luồng trên Local và báo kết quả trong chat nhóm.
+- [x] Deploy contract Local thành công.
+- [x] Seed dữ liệu thành công.
+- [x] Admin đăng ký khóa mã hóa thành công.
+- [x] Bệnh nhân đăng ký khóa mã hóa thành công.
+- [x] Bệnh viện đăng ký khóa mã hóa thành công.
+- [x] Bệnh nhân mua được Gói Cơ bản và nhận NFT.
+- [x] Bệnh viện xác minh được thẻ bảo hiểm.
+- [x] Bệnh viện gửi claim và upload dữ liệu lên IPFS thành công.
+- [x] Bệnh viện xác nhận chi phí.
+- [x] Admin truy xuất và giải mã được hồ sơ.
+- [x] Admin duyệt claim và chi trả thành công.
+- [x] Bệnh nhân kiểm tra được trạng thái Approved.
+- [x] Mỗi thành viên tự chạy toàn bộ luồng trên Local và báo kết quả trong chat nhóm.
 
 **Lưu ý:** Chỉ xác nhận hoàn thành H5 khi cả ba thành viên đã tự chạy trọn luồng chuẩn trên Hardhat Local. Không lấy kết quả test unit hoặc kết quả chạy trên Mock để thay thế kiểm thử E2E.
