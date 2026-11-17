@@ -32,17 +32,20 @@ Cập nhật lần cuối: 17/11/2026
 
 ## Bước tiếp theo
 - Hỗ trợ Lan Anh (C) hoàn tất video demo liên luồng và tổng hợp bản nộp Word/Slide chính thức.
+- Theo dõi Phương Anh (B) test trang /insurer với quyền Admin vừa cấp.
 
 ## Đang làm / dừng ở đâu
 - Toàn bộ checklist kiểm thử E2E và các hạng mục triển khai của Thành viên A đã hoàn thành 100%.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
 - `docs/plan/C/E2E_CHECKLIST.md` — sửa (cập nhật kết quả kiểm thử E2E)
+- `contracts-hardhat/scripts/grantAdmin.js` — tạo mới (script cấp quyền admin cho Phương Anh)
 - `docs/progress/PROGRESS_A.md` — sửa
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
 - Ghi nhận kết quả kiểm thử E2E của Trâm (A) trên cả môi trường Local (31337) và Sepolia (11155111).
 - Đồng bộ nhánh `tram` bắt kịp `main` sạch sẽ.
+- Cấp quyền DEFAULT_ADMIN_ROLE cho ví của Phương Anh (B) `0x3FBBa628dC4C30DCE74Eb38d015D409125750639` trên Sepolia để B tự test trang /insurer. Tx: 0xe2ad8726813901d67769d767ee198ecc7c0d1990b624f55a03044a3b59994160
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
