@@ -27,28 +27,29 @@ Cập nhật lần cuối: 17/11/2026
   - Chương 5: `docs/report/Muc_5_3_A.md` (Mục 5.3 Đánh giá an toàn và bảo mật Smart Contract)
   - Chương 5: `docs/report/Muc_5_4_A.md` (Mục 5.4 Phân tích chi phí Gas)
   - Slide thuyết trình: `docs/slides/slides_A.md` (Dàn ý 6 slide súc tích cho phần của A)
-- [x] Hỗ trợ kiểm thử liên vai trò trên Sepolia: Dùng ví Admin gọi `createPlan()` tạo thành công 2 gói bảo hiểm mẫu chuẩn (Plan #1: Gói Cơ bản 0.002 ETH; Plan #2: Gói Nâng cao 0.005 ETH) trên Sepolia tại contract `0x9B5868254c31818320d2DDCBb5B28f15af265b62`. Tổng số gói on-chain hiện tại: 2. Hỗ trợ Lan Anh (C) kiểm thử luồng mua bảo hiểm Bệnh nhân.
-- [x] Đồng bộ code mới nhất từ `origin/main` và cập nhật kết quả kiểm thử E2E vào `docs/plan/C/E2E_CHECKLIST.md` (ghi nhận kết quả kiểm thử đạt 100% của Trâm cho mốc H5).
+- [x] Hỗ trợ kiểm thử liên vai trò trên Sepolia: Dùng ví Admin gọi `createPlan()` tạo thành công 2 gói bảo hiểm mẫu chuẩn (Plan #1: Gói Cơ bản 0.002 ETH; Plan #2: Gói Nâng cao 0.005 ETH) trên Sepolia tại contract `0x9B5868254c31818320d2DDCBb5B28f15af265b62`. Cấp quyền DEFAULT_ADMIN_ROLE cho ví Phương Anh `0x3FBBa628dC4C30DCE74Eb38d015D409125750639`.
+- [x] Hỗ trợ Bệnh viện xác nhận claim (`confirmClaim(1, 0.012 ETH)`) trên Sepolia theo yêu cầu của Lan Anh (C), giúp hoàn tất chu trình bồi thường E2E thực tế trên Sepolia.
+- [x] Đồng bộ code mới nhất từ `origin/main` (bao gồm PR #22 của Phương Anh `feat(insurer): đồng bộ giao diện`), kiểm tra toàn diện chất lượng đồ án:
+  - Smart Contract: 34/34 tests pass 100%.
+  - Frontend: `npm run build` thành công không lỗi (230 modules transformed), đầy đủ 3 phân hệ `/patient`, `/hospital`, `/insurer`.
 
 ## Bước tiếp theo
-- Hỗ trợ Lan Anh (C) hoàn tất video demo liên luồng và tổng hợp bản nộp Word/Slide chính thức.
-- Theo dõi Phương Anh (B) test trang /insurer với quyền Admin vừa cấp.
+- Cùng Lan Anh (C) và Phương Anh (B) rà soát kịch bản quay video demo và slide báo cáo tổng thể.
 
 ## Đang làm / dừng ở đâu
-- Toàn bộ checklist kiểm thử E2E và các hạng mục triển khai của Thành viên A đã hoàn thành 100%.
+- Toàn bộ công việc kỹ thuật, tài liệu báo cáo và slide thuyết trình của Thành viên A đã hoàn thành 100%. Toàn bộ dự án cả 3 vai trò đã tích hợp hoàn chỉnh và sẵn sàng demo bảo vệ đồ án.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `docs/plan/C/E2E_CHECKLIST.md` — sửa (cập nhật kết quả kiểm thử E2E)
-- `contracts-hardhat/scripts/grantAdmin.js` — tạo mới (script cấp quyền admin cho Phương Anh)
-- `docs/progress/PROGRESS_A.md` — sửa
+- `README.md` — sửa (bổ sung đầy đủ phần tổng quan tiến độ của Thành viên C và cập nhật kết quả E2E Sepolia của nhóm)
+- `docs/progress/PROGRESS_A.md` — sửa (cập nhật trạng thái sau khi tích hợp PR #22 và cập nhật README)
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
-- Ghi nhận kết quả kiểm thử E2E của Trâm (A) trên cả môi trường Local (31337) và Sepolia (11155111).
-- Đồng bộ nhánh `tram` bắt kịp `main` sạch sẽ.
-- Cấp quyền DEFAULT_ADMIN_ROLE cho ví của Phương Anh (B) `0x3FBBa628dC4C30DCE74Eb38d015D409125750639` trên Sepolia để B tự test trang /insurer. Tx: 0xe2ad8726813901d67769d767ee198ecc7c0d1990b624f55a03044a3b59994160
+- Đồng bộ nhánh `tram` bắt kịp `main` mới nhất (commit `5fe4baf` merge PR #22 của Phương Anh).
+- Ghi nhận cả 3 phân hệ frontend (`/patient`, `/hospital`, `/insurer`) đã được tích hợp đầy đủ và build thành công không lỗi.
+- Toàn bộ đồ án sẵn sàng cho việc ghi hình video demo và chuẩn bị slide báo cáo.
 
 ## Vấn đề đang kẹt / cần người khác
 - Không có.
 
 ## Yêu cầu gửi người khác
-- C (Lan Anh) và B (Phương Anh): Kiểm tra kết quả trong `E2E_CHECKLIST.md` để chuẩn bị cho buổi nghiệm thu đồ án.
+- Không có. Nhóm đã hoàn tất 100% việc ghép mã nguồn trên nhánh main.

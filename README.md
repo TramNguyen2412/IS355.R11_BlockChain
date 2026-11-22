@@ -206,39 +206,41 @@ Các thao tác ghi trên giao diện cần thực hiện dryRun trước khi g�
 - docs/progress/PROGRESS_A.md, PROGRESS_B.md, PROGRESS_C.md: nhật ký tiến độ từng thành viên.
 - docs/report/: bản nháp báo cáo và tài liệu minh chứng.
 
-## 12. Trạng thái kiểm thử cần lưu ý
+## 12. Trạng thái kiểm thử và tiến độ nhóm
 
-Theo nhật ký C tại thời điểm cập nhật README.md:
-- Frontend đã build thành công trong các lần kiểm tra được ghi ở PROGRESS_C.md.
-- C-05 đã được kiểm thử tích hợp contract trên Hardhat Local.
-- C-06 đã kiểm tra phần lớn luồng Bệnh nhân ở chế độ Mock; trạng thái PENDING đã được xác nhận.
-- Kiểm thử trạng thái APPROVED/REJECTED qua giao diện Insurer và xác minh nội dung PDF vẫn cần phối hợp với B.
-- Chưa có xác nhận trong nhật ký C rằng toàn bộ hệ thống đã được kiểm thử hoàn chỉnh trên Sepolia.
+Theo nhật ký tiến độ của cả 3 thành viên (cập nhật ngày 22/11/2026):
+- Frontend đã tích hợp đầy đủ cả 3 phân hệ `/patient`, `/hospital`, `/insurer` và build thành công 100% với Vite.
+- Toàn bộ 34/34 ca kiểm thử Unit Test của Smart Contract trên Hardhat đều đạt (100% PASS).
+- Đã hoàn tất triển khai Smart Contract `HealthInsuranceNFT` trên Ethereum Sepolia Testnet tại địa chỉ `0x9B5868254c31818320d2DDCBb5B28f15af265b62`.
+- Đã thực hiện kiểm thử E2E liên luồng thành công 100% trên mạng Sepolia thật: Mua bảo hiểm mint NFT (`tokenId = 2`) -> Gửi claim kèm tải hóa đơn/bệnh án IPFS (`claimId = 1`, 0.012 ETH) -> Bệnh viện xác nhận chi phí -> Công ty bảo hiểm duyệt và Smart Contract tự động chi trả 0.012 ETH về ví bệnh nhân.
 
-Thông tin được tổng hợp tại thời điểm cập nhật README.md (12/11/2026).
-Đây là bản tổng quan tiến độ nhóm, không thay thế nhật ký tiến độ riêng của từng thành viên.
+Đây là bản tổng quan tiến độ nhóm, chi tiết xem tại nhật ký tiến độ riêng của từng thành viên trong thư mục `docs/progress/`.
 
 ### Thành viên A – Trâm
 - Đã hoàn thành toàn bộ nhiệm vụ A01–A14 theo `PROGRESS_A.md`.
-- Hoàn thiện Smart Contract `HealthInsuranceNFT` và các nghiệp vụ
-  thiết lập hệ thống, mua bảo hiểm, yêu cầu bồi thường, duyệt và chi trả.
-- Hoàn thành 34 ca kiểm thử Hardhat theo báo cáo của A.
-- Hoàn thiện giao diện Bệnh viện với 4/4 khối chức năng.
-- Đã triển khai contract chính thức trên Sepolia, cấp quyền bệnh viện,
-  nạp quỹ và xác minh mã nguồn trên Etherscan.
-- Hoàn thiện báo cáo kỹ thuật, bảng gas, bảng test case và minh chứng
-  tại `docs/report/TongHopTrienKhai_A.md`.
-- Trạng thái theo nhật ký A: hoàn thành, sẵn sàng demo và nghiệm thu.
-
+- Hoàn thiện Smart Contract `HealthInsuranceNFT` và các nghiệp vụ thiết lập hệ thống, mua bảo hiểm, yêu cầu bồi thường, duyệt và chi trả.
+- Hoàn thành 34/34 ca kiểm thử Hardhat đạt 100% theo báo cáo của A.
+- Hoàn thiện giao diện Bệnh viện (`/hospital`) với 4/4 khối chức năng (KeySetup, VerifyCard, SubmitClaimForm, PendingConfirmList).
+- Đã triển khai contract chính thức trên Sepolia, cấp quyền bệnh viện, nạp quỹ và xác minh mã nguồn có tích xanh trên Etherscan.
+- Xác nhận chi phí bồi thường (`confirmClaim`) trên Sepolia cho yêu cầu claim #1 của bệnh nhân.
+- Hoàn thiện báo cáo kỹ thuật, bảng gas, bảng test case và minh chứng tại `docs/report/TongHopTrienKhai_A.md` và dàn ý slide tại `docs/slides/slides_A.md`.
+- Trạng thái theo nhật ký A: hoàn thành 100%, sẵn sàng demo và nghiệm thu.
 
 ### Thành viên B – Phương Anh
-- Phạm vi công việc của B liên quan đến Pinata, mã hóa/giải mã AES-RSA và các chức năng phía Công ty bảo hiểm (Insurer).
-- Tại thời điểm cập nhật, nhật ký của C chưa có đủ thông tin xác nhận trạng thái hoàn thành và kết quả kiểm thử toàn bộ các phần việc của B.
-- Việc kiểm thử luồng APPROVED/REJECTED qua giao diện Insurer và xác minh nội dung PDF vẫn cần phối hợp với B.
+- Đã hoàn thành toàn bộ nhiệm vụ B-01 đến B-17 theo `PROGRESS_B.md`.
+- Hiện thực dịch vụ mã hóa RSA-OAEP 2048 kết hợp AES-256-GCM (thuần WebCrypto API) và tích hợp lưu trữ IPFS qua Pinata REST API.
+- Hoàn thiện phân hệ giao diện Công ty bảo hiểm (`/insurer`) với đầy đủ các khối chức năng: thiết lập khóa RSA, quản lý gói bảo hiểm, ủy quyền bệnh viện, quản lý quỹ bảo hiểm, bảng thẩm định/duyệt bồi thường và giám sát sự kiện on-chain (đồng bộ qua PR #22).
+- Hoàn tất kiểm thử E2E phân hệ bảo hiểm trên Sepolia với ví Admin, duyệt thành công claim #1 và kích hoạt chi trả 0.012 ETH tự động.
+- Trạng thái theo nhật ký B: hoàn thành 100%, sẵn sàng demo và nghiệm thu.
+
+### Thành viên C – Lan Anh
+- Đã hoàn thành toàn bộ nhiệm vụ C-01 đến C-13 theo `PROGRESS_C.md`.
+- Xây dựng khung ứng dụng React + Vite, điều hướng theo vai trò (Role Routing) và kết nối ví MetaMask với Ethers.js v6.
+- Hoàn thiện giao diện Bệnh nhân (`/patient`) với đầy đủ các tính năng: đăng ký khóa RSA, xem danh sách gói bảo hiểm, mua bảo hiểm và mint thẻ NFT Soulbound, gửi yêu cầu bồi thường kèm mã hóa hồ sơ bệnh án và tải hóa đơn lên IPFS, theo dõi lịch sử claim và giải mã bệnh án cá nhân.
+- Hoàn thiện tiện ích TxToast hỗ trợ hiển thị liên kết tra cứu giao dịch trên Sepolia Etherscan.
+- Hoàn thành kiểm thử E2E trên cả Hardhat Local và mạng Ethereum Sepolia Testnet thật (`tokenId = 2`, `claimId = 1`, duyệt thành công và nhận 0.012 ETH bồi thường về ví).
+- Trạng thái theo nhật ký C: hoàn thành các nghiệp vụ chính, sẵn sàng demo và nghiệm thu.
 
 ### Lưu ý
-- Trạng thái của từng thành viên cần được xác nhận bằng nhật ký tiến độ, commit hoặc kết quả kiểm thử tương ứng.
-- Không xem việc một chức năng đã được triển khai là bằng chứng cho thấy chức năng đó đã được kiểm thử hoàn chỉnh.
-- Khi có cập nhật mới, bổ sung trạng thái và bằng chứng tương ứng thay vì suy đoán tiến độ.
-
-Khi có kết quả mới, cập nhật nhật ký tiến độ và bằng chứng tương ứng thay vì sửa README thành một tuyên bố chưa được kiểm chứng.
+- Trạng thái của từng thành viên được xác nhận bằng nhật ký tiến độ, commit mã nguồn và bằng chứng giao dịch on-chain trên Sepolia Etherscan.
+- Tài liệu chi tiết và các minh chứng hình ảnh được lưu trữ trong thư mục `docs/report/` và `docs/progress/`.
