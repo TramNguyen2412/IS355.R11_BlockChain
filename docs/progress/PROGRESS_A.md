@@ -40,7 +40,8 @@ Cập nhật lần cuối: 17/11/2026
 - Toàn bộ công việc kỹ thuật, tài liệu báo cáo và slide thuyết trình của Thành viên A đã hoàn thành 100%. Toàn bộ dự án cả 3 vai trò đã tích hợp hoàn chỉnh và sẵn sàng demo bảo vệ đồ án.
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
-- `docs/progress/PROGRESS_A.md` — sửa (cập nhật trạng thái sau khi tích hợp PR #22)
+- `README.md` — sửa (bổ sung đầy đủ phần tổng quan tiến độ của Thành viên C và cập nhật kết quả E2E Sepolia của nhóm)
+- `docs/progress/PROGRESS_A.md` — sửa (cập nhật trạng thái sau khi tích hợp PR #22 và cập nhật README)
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
 - Đồng bộ nhánh `tram` bắt kịp `main` mới nhất (commit `5fe4baf` merge PR #22 của Phương Anh).
