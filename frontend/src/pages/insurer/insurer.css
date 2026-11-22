@@ -1,0 +1,402 @@
+/* ==========================================================================
+   GIAO DIỆN PHÂN HỆ CÔNG TY BẢO HIỂM — IS355 MEDICHAIN
+   Cùng phong cách với hospital.css (thẻ nổi, nền sáng, chữ >= 16px)
+   ========================================================================== */
+
+.insurer-page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #0f172a;
+}
+
+.insurer-page h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+}
+
+.insurer-page h1::before {
+  content: "🏢";
+  font-size: 28px;
+}
+
+/* ---------- Thẻ khối ---------- */
+.insurer-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.insurer-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+}
+
+.insurer-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  letter-spacing: -0.01em;
+}
+
+.insurer-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.insurer-card p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.insurer-muted {
+  color: #475569;
+}
+
+/* ---------- Bố cục dòng, ô nhập ---------- */
+.insurer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.insurer-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 12px 0;
+}
+
+.insurer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.insurer-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 11px 14px;
+  font-size: 16px;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 400;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insurer-field .insurer-input {
+  min-width: 0;
+  width: 100%;
+}
+
+.insurer-input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.insurer-input::placeholder {
+  color: #94a3b8;
+}
+
+.insurer-input:disabled {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+textarea.insurer-input {
+  width: 100%;
+  resize: vertical;
+}
+
+/* ---------- Nút ---------- */
+.insurer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.insurer-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+}
+
+.insurer-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.2);
+}
+
+.insurer-btn:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.insurer-btn-secondary {
+  color: #0369a1;
+  background: #ffffff;
+  border: 1.5px solid #0284c7;
+  box-shadow: none;
+}
+
+.insurer-btn-secondary:hover:not(:disabled) {
+  background: #f0f9ff;
+  transform: none;
+  box-shadow: none;
+}
+
+.insurer-btn-success {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+}
+
+.insurer-btn-success:hover:not(:disabled) {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+}
+
+.insurer-btn-danger {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+}
+
+.insurer-btn-danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+}
+
+.insurer-btn-sm {
+  padding: 8px 14px;
+  font-size: 15px;
+}
+
+/* ---------- Hộp thông báo ---------- */
+.insurer-ok {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 12px 0;
+  word-break: break-all;
+}
+
+.insurer-bad {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 12px 0;
+}
+
+.insurer-warn {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 10px 0;
+  display: block;
+}
+
+/* ---------- Bảng ---------- */
+.insurer-table-wrap {
+  overflow-x: auto;
+  margin-top: 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.insurer-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.insurer-table th,
+.insurer-table td {
+  padding: 12px 16px;
+  font-size: 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.insurer-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  border-bottom: 1.5px solid #e2e8f0;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.insurer-table td {
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  background: #ffffff;
+}
+
+.insurer-table tbody tr:hover td {
+  background-color: #f8fafc;
+}
+
+.insurer-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.insurer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.insurer-link {
+  color: #0284c7;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.insurer-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Nhãn trạng thái ---------- */
+.insurer-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.insurer-badge-pending { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.insurer-badge-approved { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.insurer-badge-rejected { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.insurer-badge-on { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.insurer-badge-off { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+/* ---------- Thẻ thống kê ---------- */
+.insurer-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.insurer-stat {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.insurer-stat-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.insurer-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 4px;
+}
+
+/* ---------- Hồ sơ đã giải mã ---------- */
+.insurer-record {
+  margin-top: 18px;
+  padding: 20px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+}
+
+.insurer-record h3 {
+  margin-top: 0;
+}
+
+.insurer-record ul {
+  margin: 8px 0 8px 20px;
+  font-size: 16px;
+}
+
+.insurer-record img {
+  max-width: 100%;
+  width: 420px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+/* ---------- Khối chi tiết ---------- */
+details {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+summary {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0284c7;
+  cursor: pointer;
+  user-select: none;
+}
+
+details[open] summary {
+  margin-bottom: 12px;
+}
