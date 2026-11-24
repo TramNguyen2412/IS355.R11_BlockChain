@@ -1,5 +1,5 @@
 
-import { BrowserProvider, Contract, ZeroHash } from 'ethers';
+import { BrowserProvider, Contract, Interface, ZeroHash } from 'ethers';
 import abi from '../contracts/abi.json';
 import addressConfig from '../contracts/address.json';
 import { toVietnameseError } from './errors.js';
@@ -11,6 +11,10 @@ const mockService = USE_MOCK
   : null;
 
 const CONTRACT_ADDRESS = addressConfig.HealthInsuranceNFT;
+const CONTRACT_INTERFACE = new Interface(abi);
+
+const CLAIM_TX_STORAGE_KEY =
+  `medichain_claim_tx_hashes_${CONTRACT_ADDRESS.toLowerCase()}`;
 const DEPLOY_BLOCK = Number(addressConfig.deployBlock ?? 0);
 const EXPECTED_CHAIN_ID = Number(
   import.meta.env.VITE_CHAIN_ID ?? addressConfig.chainId,
@@ -30,6 +34,32 @@ const EVENT_NAMES = [
 ];
 
 const STATUS_LABELS = ['PENDING', 'APPROVED', 'REJECTED'];
+
+// Đọc transaction hash đã lưu trong trình duyệt.
+function getStoredClaimHashes() {
+  try {
+    return JSON.parse(
+      localStorage.getItem(CLAIM_TX_STORAGE_KEY) || '{}',
+    );
+  } catch {
+    return {};
+  }
+}
+
+// Lưu transaction hash theo claimId.
+function saveClaimTxHash(claimId, txHash) {
+  try {
+    const hashes = getStoredClaimHashes();
+    hashes[String(claimId)] = txHash;
+
+    localStorage.setItem(
+      CLAIM_TX_STORAGE_KEY,
+      JSON.stringify(hashes),
+    );
+  } catch (error) {
+    console.warn('Không thể lưu transaction hash:', error);
+  }
+}
 
 function asPlan(plan) {
   return {
@@ -257,9 +287,11 @@ export async function getClaim(claimId) {
 }
 
 // Lấy danh sách yêu cầu bồi thường của bệnh nhân.
+// Lấy danh sách yêu cầu bồi thường của bệnh nhân.
+// Lấy danh sách yêu cầu bồi thường của bệnh nhân.
 export async function getClaimsByPatient(address) {
   if (USE_MOCK) return mockService.getClaimsByPatient(address);
-  
+
   return readContract(async (contract) => {
     const claimIds = await contract.getClaimsByPatient(address);
 
@@ -267,7 +299,16 @@ export async function getClaimsByPatient(address) {
       claimIds.map((claimId) => contract.getClaim(claimId)),
     );
 
-    return claims.map(asClaim);
+    const storedHashes = getStoredClaimHashes();
+
+    return claims.map((claim) => {
+      const claimData = asClaim(claim);
+
+      return {
+        ...claimData,
+        txHash: storedHashes[String(claimData.claimId)] ?? null,
+      };
+    });
   });
 }
 
@@ -507,10 +548,11 @@ export async function purchasePolicy(
 }
 
 // Gửi yêu cầu bồi thường.
+// Gửi yêu cầu bồi thường và lưu transaction hash.
 export async function submitClaim(input, options = {}) {
   if (USE_MOCK) return mockService.submitClaim(input, options);
-  
-  return writeContract(
+
+  const result = await writeContract(
     'submitClaim',
     [
       input.tokenId,
@@ -520,6 +562,32 @@ export async function submitClaim(input, options = {}) {
     ],
     options,
   );
+
+  // Lấy claimId từ event ClaimSubmitted trong receipt.
+  let claimId = null;
+
+  for (const log of result.receipt?.logs ?? []) {
+    try {
+      const event = CONTRACT_INTERFACE.parseLog(log);
+
+      if (event?.name === 'ClaimSubmitted') {
+        claimId = Number(event.args.claimId);
+        break;
+      }
+    } catch {
+      // Bỏ qua log không thuộc event cần tìm.
+    }
+  }
+
+  // Lưu hash theo claimId để hiển thị ở lịch sử.
+  if (claimId !== null && result.hash) {
+    saveClaimTxHash(claimId, result.hash);
+  }
+
+  return {
+    ...result,
+    claimId,
+  };
 }
 
 // Bệnh viện xác nhận chi phí điều trị.

@@ -84,9 +84,16 @@ function ClaimList({ claims = [] }) {
             </p>
 
             <p>
-              <strong>Hash giao dịch (mock):</strong>{' '}
+              <strong>Hash giao dịch:</strong>{' '}
               {claim.txHash ? (
-                <code>{claim.txHash}</code>
+                <a
+                  href={`https://sepolia.etherscan.io/tx/${claim.txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ wordBreak: 'break-all' }}
+                >
+                  {claim.txHash}
+                </a>
               ) : (
                 <span>Chưa có hash trong dữ liệu hiện tại.</span>
               )}
