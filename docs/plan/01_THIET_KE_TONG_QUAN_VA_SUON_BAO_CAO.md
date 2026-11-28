@@ -417,7 +417,6 @@ Mỗi mục **ngắn, 1–2 trang**, có sơ đồ/ví dụ gắn với đề t�
 - **5.2 Kiểm thử end-to-end trên Sepolia** (C): kịch bản demo, ảnh/ảnh giao dịch.
 - **5.3 Đánh giá bảo mật** (A+B): reentrancy, tràn số, RBAC, riêng tư dữ liệu, soulbound. Có bảng "mối đe dọa → biện pháp".
 - **5.4 Chi phí gas** (A): bảng gas từng hàm (lấy từ `hardhat-gas-reporter` hoặc từ Etherscan).
-- **5.5 Đối chiếu rubric** (C): bảng mục 9.
 
 ### CHƯƠNG 6. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN (C)
 - Kết quả đạt được.

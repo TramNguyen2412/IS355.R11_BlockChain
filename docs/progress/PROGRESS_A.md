@@ -1,5 +1,5 @@
 # PROGRESS — Thành viên A (Trâm)
-Cập nhật lần cuối: 17/11/2026
+Cập nhật lần cuối: 26/11/2026
 
 ## Đã xong
 - [x] M0 — Khởi tạo repo MediChain, cây thư mục, luật chung (do A (Trâm) làm). Nhánh làm việc của mình: `tram`
@@ -41,7 +41,13 @@ Cập nhật lần cuối: 17/11/2026
 
 ## File đã tạo / sửa (liệt kê theo đường dẫn)
 - `README.md` — sửa (bổ sung đầy đủ phần tổng quan tiến độ của Thành viên C và cập nhật kết quả E2E Sepolia của nhóm)
-- `docs/progress/PROGRESS_A.md` — sửa (cập nhật trạng thái sau khi tích hợp PR #22 và cập nhật README)
+- `docs/progress/PROGRESS_A.md` — sửa (cập nhật trạng thái sau khi tích hợp PR #22 và hoàn thiện kịch bản thuyết trình)
+- `docs/slides/KICH_BAN_THUYET_TRINH_TRAM.md` — tạo/cập nhật nội dung slide gọn rõ và lời thoại thuyết trình cho Thành viên A (local, không push)
+- `docs/report/Muc_*_A.md` — xóa toàn bộ đường kẻ ngang (`---`) và khoảng trắng thừa để copy sang Word không bị vạch xám
+- `docs/report/TaiLieuThamKhao_A.md` — tạo bảng danh mục Tài liệu tham khảo chuẩn IEEE và hướng dẫn gắn trích dẫn `[1]..[9]` vào báo cáo Word
+- `docs/report/LoiCamOn_Va_TomTatDeTai_A.md` — soạn lại Lời cảm ơn (ThS. Hà Lê Hoài Trung, môn Blockchain) và Tóm tắt báo cáo tiếng Việt tự nhiên, súc tích chuẩn 1 trang A4
+- `docs/report/images/A/fig_2_4_dual_trigger.png`, `fig_3_6_claim_state_machine.png`, `fig_4_5_hospital_ui_arch.png` — render 3 ảnh PNG chất lượng cao từ các sơ đồ trong báo cáo để dán trực tiếp vào Word
+- `docs/report/Muc_4_2_A.md`, `docs/report/Muc4_2_RangBuoc_A.md` — xóa bỏ 100% số thứ tự dòng code (201:, 202:...) trong tất cả các đoạn mã Solidity trích dẫn, giúp Trâm copy code vào Word gọn gàng, sạch đẹp và đúng chuẩn code snippet
 
 ## Quyết định đã chốt trong phiên (không đổi nếu chưa họp)
 - Đồng bộ nhánh `tram` bắt kịp `main` mới nhất (commit `5fe4baf` merge PR #22 của Phương Anh).
